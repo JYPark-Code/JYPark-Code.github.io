@@ -27,9 +27,9 @@ export const CERTS_MAIN: CertGroup[] = [
   {
     label: "Programs & Mentoring",
     items: [
-      { name: "우아한테크코스 8기 프리코스", year: "2025" },
+      { name: "Woowacourse 8th · Pre-course", year: "2025" },
       { name: "F-Lab · Java Backend Mentoring", year: "2025" },
-      { name: "멋쟁이사자처럼 AI 스쿨 4기", year: "2021" },
+      { name: "likelion AI School · 4th", year: "2021" },
     ],
   },
 ];

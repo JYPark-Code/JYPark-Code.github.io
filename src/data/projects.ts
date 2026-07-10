@@ -755,7 +755,7 @@ export const PROJECTS: Project[] = [
     stack: ["Java", "JUnit", "TDD", "Clean Code"],
     links: { code: `${GH}/java-lotto-8` },
     en: {
-      title: "Woowa Pre-course (Java)",
+      title: "Woowacourse Pre-course (Java)",
       kicker: "Coursework",
       role: "Solo",
       type: "Java practice",
@@ -789,7 +789,7 @@ export const PROJECTS: Project[] = [
     stack: ["Python", "Jupyter", "ML", "pandas"],
     links: { code: `${GH}/LikeLion_13th_ML_Course` },
     en: {
-      title: "LikeLion ML Study",
+      title: "likelion ML Study",
       kicker: "Self-study",
       role: "Student",
       type: "ML coursework",
