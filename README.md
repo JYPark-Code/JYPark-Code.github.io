@@ -10,7 +10,7 @@ Built as a single scrolling page (bento hero → Netflix-style project browse �
 - **React 19** + **TypeScript**
 - **Tailwind CSS v4**
 - **[Framer Motion](https://www.framer.com/motion/)** for animation
-- **[Pretendard](https://github.com/orioncactus/pretendard)** self-hosted for Korean typography
+- **[Pretendard](https://github.com/orioncactus/pretendard)** (via jsDelivr CDN) for Korean typography
 
 ## Getting Started
 
@@ -42,7 +42,9 @@ This is a **static export**, not a Vercel/server deployment. `npm run build` wri
 
 Because this is a **user site** (`<user>.github.io`) served at the domain root, **no `basePath`/`assetPrefix` is needed**.
 
-Deployment publishes the contents of `out/` to GitHub Pages (a GitHub Actions workflow to build and publish is planned).
+Deployment is automated by [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml): every push to `main` runs `npm ci && npm run build` and publishes `out/` to GitHub Pages via `upload-pages-artifact` + `deploy-pages`.
+
+**One-time setup:** in **Settings → Pages → Source**, select **GitHub Actions** (the repo currently uses the legacy branch source). After that, pushes to `main` deploy automatically.
 
 ## Project layout
 

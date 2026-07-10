@@ -42,3 +42,7 @@ next-env.d.ts
 
 # Claude Code local tooling & settings (installed skills, local config, backups)
 .claude/
+
+# Private reference material — NOT for the public repo (résumé has personal info)
+docs/resume/
+images/
