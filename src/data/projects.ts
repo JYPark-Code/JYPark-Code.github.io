@@ -288,6 +288,42 @@ export const PROJECTS: Project[] = [
   },
   // ---- Backend / systems -----------------------------------------------------
   {
+    id: "anycommerce",
+    year: "2024",
+    duration: { en: "2024.10–2025.02", ko: "2024.10~2025.02" },
+    pas: "lavender",
+    stack: ["Java", "Spring Boot", "Spring Security", "JPA", "MySQL", "JWT", "Docker", "GitHub Actions"],
+    links: { code: `${GH}/anycommerce` },
+    en: {
+      title: "AnyCommerce (F-Lab)",
+      kicker: "Backend · E-commerce",
+      role: "Author (mentored)",
+      type: "Spring Boot backend",
+      lede: "A from-scratch e-commerce backend built over ~4 months of F-Lab Java-backend mentoring: signup, auth, catalog, cart, and orders.",
+      desc: "A Spring Boot REST API covering the full commerce path. Signup uses terms-agreement entities (JPA composite keys), email dup-check, CoolSMS phone verification, and encrypted passwords; auth is JWT (access + refresh) behind a Spring Security filter. The domain spans products/options/collections, cart, and orders (items, payment, delivery, status), with centralized error codes, integration tests, and a CI/CD pipeline to AWS ECR.",
+      highlights: [
+        "JWT auth (access + refresh) via a Spring Security token filter",
+        "Signup: composite-key terms agreement, CoolSMS phone verification, encrypted passwords",
+        "Commerce domain (catalog / cart / orders) + centralized ErrorCode handling + integration tests",
+        "CI/CD (GitHub Actions + SonarCloud + Docker) deploying to AWS ECR",
+      ],
+    },
+    ko: {
+      title: "AnyCommerce (F-Lab)",
+      kicker: "백엔드 · 이커머스",
+      role: "제작 (멘토링)",
+      type: "Spring Boot 백엔드",
+      lede: "약 4개월 F-Lab 자바 백엔드 멘토링으로 밑바닥부터 만든 이커머스 백엔드: 회원가입, 인증, 카탈로그, 장바구니, 주문.",
+      desc: "커머스 전 과정을 다루는 Spring Boot REST API입니다. 회원가입은 약관 동의 엔티티(JPA 복합키), 이메일 중복 체크, CoolSMS 휴대폰 인증, 비밀번호 암호화로 구성했고, 인증은 Spring Security 필터 뒤의 JWT(액세스 + 리프레시)입니다. 도메인은 상품/옵션/컬렉션, 장바구니, 주문(주문항목·결제·배송·상태)에 걸쳐 있으며, 중앙화된 에러 코드, 통합 테스트, AWS ECR 배포 CI/CD를 갖췄습니다.",
+      highlights: [
+        "Spring Security 토큰 필터 기반 JWT 인증(액세스 + 리프레시)",
+        "회원가입: 복합키 약관 동의, CoolSMS 휴대폰 인증, 비밀번호 암호화",
+        "커머스 도메인(카탈로그 / 장바구니 / 주문) + 중앙화된 ErrorCode 처리 + 통합 테스트",
+        "CI/CD(GitHub Actions + SonarCloud + Docker)로 AWS ECR 배포",
+      ],
+    },
+  },
+  {
     id: "event-driven-commerce",
     narrative: {
       problem: {
@@ -857,7 +893,7 @@ export const PROJECTS: Project[] = [
       role: "Student",
       type: "React basics",
       lede: "A handful of small React practice repos from learning the basics: components, state, conditional rendering, and styling.",
-      desc: "Tiny practice projects made while learning React: conditional rendering, styled-components, and props/state exercises.",
+      desc: "Tiny practice projects made while learning React: conditional rendering, styled-components, props/state exercises, and CodeSandbox mini-apps (a keeper card, a to-do).",
       highlights: [
         "Components, props, and state",
         "Dynamic and conditional rendering",
@@ -870,11 +906,44 @@ export const PROJECTS: Project[] = [
       role: "수강생",
       type: "React 기초",
       lede: "React 기초를 배우며 만든 짤막한 연습 레포 모음. 컴포넌트, 상태, 조건부 렌더링, 스타일링.",
-      desc: "React를 배우며 만든 작은 연습 프로젝트들: 조건부 렌더링, styled-components, props/state 연습.",
+      desc: "React를 배우며 만든 작은 연습 프로젝트들: 조건부 렌더링, styled-components, props/state 연습, CodeSandbox 미니 앱(키퍼 카드, 투두).",
       highlights: [
         "컴포넌트, props, 상태",
         "동적·조건부 렌더링",
         "styled-components / CSS-in-JS",
+      ],
+    },
+  },
+  {
+    id: "fastapi-study",
+    year: "2022",
+    pas: "mint",
+    stack: ["Python", "FastAPI", "Pydantic"],
+    links: { code: `${GH}/fast_api_tutorial_udemy` },
+    en: {
+      title: "FastAPI Study",
+      kicker: "Self-study",
+      role: "Student",
+      type: "FastAPI course",
+      lede: "A FastAPI course follow-along: async APIs, routing, and request/response models in Python.",
+      desc: "Built while taking a FastAPI course (Udemy), practicing async endpoints, path/query params, and Pydantic models. The foundation for later FastAPI work (the chatbot backend).",
+      highlights: [
+        "Async API endpoints + routing",
+        "Pydantic request/response models",
+        "Groundwork for the later chatbot backend",
+      ],
+    },
+    ko: {
+      title: "FastAPI 학습",
+      kicker: "자기주도 학습",
+      role: "수강생",
+      type: "FastAPI 강좌",
+      lede: "FastAPI 강좌 실습. Python으로 비동기 API, 라우팅, 요청/응답 모델.",
+      desc: "FastAPI 강좌(Udemy)를 들으며 비동기 엔드포인트, 경로/쿼리 파라미터, Pydantic 모델을 연습했습니다. 이후 FastAPI 작업(챗봇 백엔드)의 기반이 되었습니다.",
+      highlights: [
+        "비동기 API 엔드포인트 + 라우팅",
+        "Pydantic 요청/응답 모델",
+        "이후 챗봇 백엔드의 밑바탕",
       ],
     },
   },
@@ -892,24 +961,29 @@ export interface Row {
 
 // Category rows (a project can appear in more than one). The dashed "+ more"
 // ghost tile renders on the last row only.
+// Cards are ordered newest-first (most recent on the left) within each row.
 export const ROWS: Row[] = [
-  { en: "Featured", ko: "대표작", ids: ["hhosting-website", "hhosting-ai-devtoolkit", "event-driven-commerce", "hhosting-proxmox"] },
+  {
+    en: "Featured",
+    ko: "대표작",
+    ids: ["hhosting-website", "hhosting-ai-devtoolkit", "hhosting-proxmox", "event-driven-commerce"],
+  },
   {
     en: "Company work",
     ko: "회사 프로젝트",
-    ids: ["hhosting-website", "hhosting-proxmox", "hhosting-ai-devtoolkit", "hankook-chatbot"],
+    ids: ["hhosting-website", "hhosting-ai-devtoolkit", "hhosting-proxmox", "hankook-chatbot"],
   },
   {
     en: "Backend & Systems",
     ko: "백엔드 · 시스템",
-    ids: ["event-driven-commerce", "minisql", "mini-redis", "web-proxy", "malloc", "pintos"],
+    ids: ["pintos", "minisql", "web-proxy", "malloc", "mini-redis", "anycommerce", "event-driven-commerce"],
   },
   { en: "AI & ML", ko: "인공지능", ids: ["multi-model-harness", "minigpt", "mnist", "codex-dashboard"] },
   { en: "Frontend", ko: "프론트엔드", ids: ["react-tetris", "vdom-diff"] },
   {
     en: "Coursework & Self-study",
     ko: "코스워크 · 자기주도 학습",
-    ids: ["woowa-precourse", "likelion-ml", "php-cms", "static-profile", "react-study"],
+    ids: ["woowa-precourse", "fastapi-study", "likelion-ml", "static-profile", "react-study", "php-cms"],
   },
 ];
 
