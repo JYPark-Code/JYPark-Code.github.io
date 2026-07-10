@@ -6,10 +6,13 @@ import Certs from "@/components/Certs";
 import BottomBento from "@/components/BottomBento";
 import Footer from "@/components/Footer";
 import RevealInit from "@/components/RevealInit";
+import ScrollProgress from "@/components/ScrollProgress";
+import ScrollSpy from "@/components/ScrollSpy";
 
 export default function Home() {
   return (
     <>
+      <ScrollProgress />
       <Nav />
       <main>
         <Hero />
@@ -20,6 +23,7 @@ export default function Home() {
       </main>
       <Footer />
       <RevealInit />
+      <ScrollSpy />
     </>
   );
 }

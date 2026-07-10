@@ -330,6 +330,17 @@
   .cert-toggle .chev{font-size:0.56rem;color:var(--faint);}
   .cert-course-cols{animation:deckIn .3s var(--ease);margin-top:0.4rem;}
 
+  /* ===== micro-polish: scroll progress · scroll-spy nav · theme fade ===== */
+  .scroll-progress{position:fixed;top:0;left:0;right:0;height:2px;background:var(--grad);transform:scaleX(0);transform-origin:left;z-index:70;pointer-events:none;will-change:transform;transition:transform .1s linear;}
+  .nav-links a{position:relative;}
+  .nav-links a.active{color:var(--text);}
+  .nav-links a.active::after{content:"";position:absolute;left:0.7rem;right:0.7rem;bottom:0.12rem;height:2px;border-radius:2px;background:var(--grad);}
+  :root.theme-anim,:root.theme-anim *{transition:background-color .35s ease,border-color .35s ease,color .35s ease,fill .35s ease !important;}
+  @media (prefers-reduced-motion: reduce){
+    .scroll-progress{transition:none;}
+    :root.theme-anim,:root.theme-anim *{transition:none !important;}
+  }
+
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
     .reveal{opacity:1;transform:none;transition:none;}

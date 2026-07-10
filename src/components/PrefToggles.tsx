@@ -31,11 +31,14 @@ export default function PrefToggles() {
 
   const toggleTheme = () => {
     const d = document.documentElement;
+    // Briefly enable color transitions so the theme fades instead of snapping.
+    d.classList.add("theme-anim");
     const next = d.getAttribute("data-theme") === "dark" ? "light" : "dark";
     d.setAttribute("data-theme", next);
     try {
       localStorage.setItem("theme", next);
     } catch {}
+    window.setTimeout(() => d.classList.remove("theme-anim"), 400);
   };
 
   return (
