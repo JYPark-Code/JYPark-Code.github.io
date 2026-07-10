@@ -26,3 +26,11 @@ They were originally in an ephemeral scratchpad, so they're preserved here.
   mockup's `data-lang` CSS toggle).
 
 Open either file directly in a browser to view. Toggle theme/lang via the in-page controls.
+
+## Earlier explorations (pre-v5, kept for history)
+
+Superseded by v5 above; preserved because the scratchpad they lived in is ephemeral.
+
+- `portfolio-mockup.html` — first full mockup
+- `portfolio-netflix.html` — Netflix-browse direction study
+- `portfolio-hybrid.html` — hybrid layout study
