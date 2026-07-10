@@ -48,6 +48,7 @@ export interface CurrentlyItem {
 
 export const CURRENTLY: CurrentlyItem[] = [
   { en: "Backend & full-stack at a B2B hosting company", ko: "B2B 호스팅사에서 백엔드 · 풀스택" },
+  { en: "LLM product mentor at Codeit (part-time)", ko: "코드잇에서 LLM 프로덕트 멘토 (파트타임)" },
   { en: "Building internal AI dev tooling", ko: "사내 AI 개발 도구 제작 중" },
   { en: "Open to interesting problems", ko: "흥미로운 문제에 열려 있음" },
 ];

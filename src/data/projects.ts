@@ -643,40 +643,6 @@ export const PROJECTS: Project[] = [
       ],
     },
   },
-  {
-    id: "linux-board",
-    year: "2023",
-    duration: { en: "2023.08–10", ko: "2023.08~10" },
-    pas: "sky",
-    stack: ["Java", "Spring", "JPA", "QueryDSL", "Vue.js", "MySQL"],
-    links: { code: `${GH}/flask-board` },
-    en: {
-      title: "Community Board Renewal",
-      kicker: "Backend · Web",
-      role: "Backend",
-      type: "Board / RESTful API",
-      lede: "Renewed an aging Korean Linux-community board: split business logic from the view and moved to a RESTful API.",
-      desc: "The legacy board mixed DB data with HTML. I untangled the data model, built the REST API the front end needed, and added boolean search. The linked repo (flask-board) is a small public extract of just the search logic.",
-      highlights: [
-        "Server-side templates → RESTful API for scalability",
-        "Response time up ~20% by separating DB ops from rendering; passed jMeter 200 TPS",
-        "QueryDSL paging + boolean (AND/OR/NOT) search",
-      ],
-    },
-    ko: {
-      title: "커뮤니티 게시판 리뉴얼",
-      kicker: "백엔드 · 웹",
-      role: "백엔드",
-      type: "게시판 / RESTful API",
-      lede: "노후한 국내 리눅스 커뮤니티 게시판을 리뉴얼해, 비즈니스 로직과 뷰를 분리하고 RESTful API로 전환했습니다.",
-      desc: "기존 게시판은 DB 데이터와 HTML이 혼재했습니다. 데이터 모델을 정리하고 프론트가 필요한 REST API를 만들고 불리언 검색을 더했습니다. 링크된 레포(flask-board)는 검색 로직만 공개용으로 추출한 부분입니다.",
-      highlights: [
-        "서버사이드 템플릿 → RESTful API로 확장성 확보",
-        "DB 연산과 렌더링 분리로 응답 속도 약 20% 향상; jMeter 200 TPS 통과",
-        "QueryDSL 페이징 + AND/OR/NOT 불리언 검색",
-      ],
-    },
-  },
   // ---- Frontend --------------------------------------------------------------
   {
     id: "react-tetris",
@@ -795,13 +761,17 @@ export interface Row {
 // ghost tile renders on the last row only.
 export const ROWS: Row[] = [
   { en: "Featured", ko: "대표작", ids: ["hhosting-website", "hhosting-ai-devtoolkit", "event-driven-commerce", "hhosting-proxmox"] },
-  { en: "Company & Cloud", ko: "회사 · 클라우드", ids: ["hhosting-website", "hhosting-proxmox", "hhosting-ai-devtoolkit"] },
+  {
+    en: "Company work",
+    ko: "회사 프로젝트",
+    ids: ["hhosting-website", "hhosting-proxmox", "hhosting-ai-devtoolkit", "hankook-chatbot"],
+  },
   {
     en: "Backend & Systems",
     ko: "백엔드 · 시스템",
-    ids: ["event-driven-commerce", "linux-board", "minisql", "mini-redis", "web-proxy", "malloc", "pintos"],
+    ids: ["event-driven-commerce", "minisql", "mini-redis", "web-proxy", "malloc", "pintos"],
   },
-  { en: "AI & ML", ko: "인공지능", ids: ["hankook-chatbot", "multi-model-harness", "minigpt", "mnist", "codex-dashboard"] },
+  { en: "AI & ML", ko: "인공지능", ids: ["multi-model-harness", "minigpt", "mnist", "codex-dashboard"] },
   { en: "Frontend", ko: "프론트엔드", ids: ["react-tetris", "vdom-diff"] },
   { en: "Coursework & Practice", ko: "코스워크 · 연습", ids: ["woowa-precourse"] },
 ];
@@ -876,6 +846,20 @@ export const MILESTONES: Milestone[] = [
       tag: "학습",
       title: "밑바닥부터 CS",
       desc: "Pintos OS, B+Tree DB 엔진, CS:APP 랩, 직접 구현.",
+    },
+  },
+  {
+    yr: "2026",
+    pas: "sky",
+    en: {
+      tag: "Mentoring",
+      title: "Codeit · LLM Product Mentor",
+      desc: "Mentoring LLM product building (part-time) · since July 2026.",
+    },
+    ko: {
+      tag: "멘토링",
+      title: "코드잇 · LLM 프로덕트 멘토",
+      desc: "LLM 프로덕트 만들기 멘토링(파트타임) · 2026년 7월부터.",
     },
   },
   {
