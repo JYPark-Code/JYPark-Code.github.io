@@ -1,0 +1,636 @@
+<!doctype html><html data-theme="dark" data-lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>JYPark Portfolio — mono v5</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendard-variable-dynamic-subset.min.css" />
+</head><body>
+<style>
+  :root{
+    --bg:#0a0b0d; --bg-elev:#131519; --bg-elev-2:#1a1d23;
+    --line:rgba(240,236,226,0.10); --line-2:rgba(240,236,226,0.20);
+    --text:#ece9e2; --muted:#9ba0a8; --faint:#5b616b;
+    --ink:#ece9e2; --ink-inv:#0a0b0d;               /* mono ink for high-contrast text */
+    --ink-soft:rgba(236,233,226,0.10); --ink-line:rgba(236,233,226,0.28);
+    --ok:#6bbf8a;
+    /* iridescent signature gradient — flashy accent, used on chrome + motion */
+    --grad:linear-gradient(120deg,#22d3ee,#6366f1,#c084fc,#f472b6);
+    --grad-soft:linear-gradient(120deg,rgba(34,211,238,0.16),rgba(99,102,241,0.16),rgba(192,132,252,0.16),rgba(244,114,182,0.16));
+    --g1:#22d3ee; --g2:#6366f1; --g3:#c084fc; --g4:#f472b6;
+    --maxw:1320px;
+    --sans:"Pretendard","Pretendard Variable","Segoe UI",ui-sans-serif,system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    --mono:ui-monospace,"Cascadia Code","SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --ease:cubic-bezier(0.22,1,0.36,1);
+    --tile-w:236px; --tile-h:318px;
+  }
+  :root[data-theme="light"]{
+    --bg:#f4f4f2; --bg-elev:#ffffff; --bg-elev-2:#ecebe6;
+    --line:rgba(20,20,22,0.10); --line-2:rgba(20,20,22,0.20);
+    --text:#16181c; --muted:#565b62; --faint:#8b9099;
+    --ink:#141518; --ink-inv:#ffffff;
+    --ink-soft:rgba(20,21,24,0.06); --ink-line:rgba(20,21,24,0.28);
+    --ok:#2e8b57;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;scroll-padding-top:5rem;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--ink);color:var(--ink-inv);}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(1.25rem,4vw,3.5rem);}
+  .mono{font-family:var(--mono);}
+  .eyebrow{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);display:inline-flex;align-items:center;gap:0.6rem;}
+  .eyebrow::before{content:"";width:1.8rem;height:2px;border-radius:2px;background:var(--grad);}
+  :focus-visible{outline:2px solid var(--g2);outline-offset:3px;border-radius:4px;}
+
+  /* gradient text helper */
+  .gt{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% 100%;animation:gshift 8s linear infinite;}
+  @keyframes gshift{to{background-position:200% 0;}}
+  @keyframes auroraA{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(8%,6%) scale(1.15);}66%{transform:translate(-6%,4%) scale(0.95);}}
+  @keyframes auroraB{0%,100%{transform:translate(0,0) scale(1.05);}50%{transform:translate(-10%,-6%) scale(1.2);}}
+  @keyframes auroraC{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(9%,-8%) scale(1.1);}}
+  @keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+  @keyframes drawline{from{transform:scaleX(0);}to{transform:scaleX(1);}}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(99,102,241,0.5);}50%{box-shadow:0 0 0 7px rgba(99,102,241,0);}}
+
+  /* i18n: show only current language */
+  :root[data-lang="en"] [lang="ko"]{display:none;}
+  :root[data-lang="ko"] [lang="en"]{display:none;}
+  /* Korean typography fix: monospace stacks carry no Hangul, so KO text set in --mono
+     falls back to a thin system serif and looks broken. Route every mono-styled UI chrome
+     to Pretendard (sans) and add weight so Korean reads as intentionally as English. */
+  :root[data-lang="ko"] .brand,
+  :root[data-lang="ko"] .nav-links a,
+  :root[data-lang="ko"] .eyebrow,
+  :root[data-lang="ko"] .bb-tag,
+  :root[data-lang="ko"] .bb-tag .mono,
+  :root[data-lang="ko"] .btn,
+  :root[data-lang="ko"] .cbtn,
+  :root[data-lang="ko"] .stat .l,
+  :root[data-lang="ko"] .stat .edit,
+  :root[data-lang="ko"] .tile .glyph,
+  :root[data-lang="ko"] .tile .cap .s,
+  :root[data-lang="ko"] .tile .hover-actions .mini,
+  :root[data-lang="ko"] .ms .badge,
+  :root[data-lang="ko"] .stack-cols h4,
+  :root[data-lang="ko"] .foot-links a,
+  :root[data-lang="ko"] .foot-inner .mono,
+  :root[data-lang="ko"] .modal-body h4,
+  :root[data-lang="ko"] .meta-row .l,
+  :root[data-lang="ko"] .modal-hero .htitle .k{
+    font-family:var(--sans);
+    font-weight:600;
+  }
+  /* the wide EN tracking + uppercase does nothing for Hangul — tighten and drop it */
+  :root[data-lang="ko"] .eyebrow,
+  :root[data-lang="ko"] .stat .l,
+  :root[data-lang="ko"] .tile .glyph,
+  :root[data-lang="ko"] .ms .badge,
+  :root[data-lang="ko"] .stack-cols h4,
+  :root[data-lang="ko"] .modal-body h4,
+  :root[data-lang="ko"] .meta-row .l{
+    letter-spacing:0.02em;
+    text-transform:none;
+  }
+  :root[data-lang="ko"] .nav-links a{font-size:0.9rem;}
+  :root[data-lang="ko"] .tile .hover-actions .mini{font-size:0.82rem;}
+
+  /* nav */
+  .nav{position:sticky;top:0;z-index:60;backdrop-filter:saturate(180%) blur(12px);background:color-mix(in srgb,var(--bg) 72%,transparent);border-bottom:1px solid var(--line);}
+  .nav-inner{max-width:var(--maxw);margin:0 auto;padding:0 clamp(1.25rem,4vw,3.5rem);height:4.25rem;display:flex;align-items:center;justify-content:space-between;}
+  .brand{font-family:var(--mono);font-weight:600;font-size:0.95rem;letter-spacing:-0.01em;}
+  .nav-links{display:flex;align-items:center;gap:0.25rem;}
+  .nav-links a{font-family:var(--mono);font-size:0.78rem;color:var(--muted);padding:0.4rem 0.7rem;border-radius:7px;transition:color .2s,background .2s;}
+  .nav-links a:hover{color:var(--text);background:var(--bg-elev);}
+  .icon-btn{margin-left:0.35rem;height:2rem;min-width:2rem;padding:0 0.5rem;display:grid;place-items:center;border:1px solid var(--line-2);border-radius:8px;background:transparent;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:0.72rem;transition:color .2s,border-color .2s;}
+  .icon-btn:hover{color:var(--text);border-color:var(--ink-line);}
+  @media(max-width:700px){.nav-links a.sec{display:none;}}
+
+  /* ===== TOP BENTO ===== */
+  .hero-bento{display:grid;grid-template-columns:2fr 1fr;grid-auto-rows:1fr;gap:0.9rem;padding-top:clamp(1.5rem,3vw,2.4rem);padding-bottom:1rem;}
+  .cell{border:1px solid var(--line);border-radius:18px;background:var(--bg-elev);position:relative;overflow:hidden;}
+  .hero-main{grid-row:span 3;min-height:min(70vh,560px);display:flex;align-items:center;padding:clamp(1.6rem,4vw,3rem);background:#08090c;}
+  /* animated aurora — flashy color behind readable text */
+  .aurora{position:absolute;inset:-20%;z-index:0;filter:blur(48px);opacity:0.9;}
+  .aurora i{position:absolute;display:block;border-radius:50%;mix-blend-mode:screen;}
+  .aurora i:nth-child(1){width:46%;height:52%;left:2%;top:6%;background:radial-gradient(circle,var(--g1),transparent 62%);animation:auroraA 16s var(--ease) infinite;}
+  .aurora i:nth-child(2){width:52%;height:56%;right:0%;top:0%;background:radial-gradient(circle,var(--g2),transparent 62%);animation:auroraB 20s var(--ease) infinite;}
+  .aurora i:nth-child(3){width:48%;height:54%;left:24%;bottom:-6%;background:radial-gradient(circle,var(--g3),transparent 62%);animation:auroraC 18s var(--ease) infinite;}
+  .aurora i:nth-child(4){width:40%;height:46%;right:8%;bottom:0%;background:radial-gradient(circle,var(--g4),transparent 62%);animation:auroraA 22s var(--ease) infinite reverse;}
+  /* constellation: night-sky network, sits under the readability gradient so it dims toward the text side */
+  .hero-constellation{position:absolute;inset:0;z-index:1;pointer-events:none;}
+  .hero-main::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(6,7,10,0.92) 4%,rgba(6,7,10,0.62) 46%,rgba(6,7,10,0.28) 100%),linear-gradient(0deg,rgba(6,7,10,0.55),transparent 60%);}
+  .hero-copy{position:relative;z-index:2;}
+  @media (prefers-reduced-motion: reduce){.aurora i{animation:none !important;}}
+  .bb-tag{display:inline-flex;align-items:center;gap:0.55rem;font-family:var(--mono);font-size:0.78rem;color:#b7bcc4;border:1px solid rgba(255,255,255,0.16);border-radius:999px;padding:0.35rem 0.85rem 0.35rem 0.7rem;}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 22%,transparent);}
+  .hero-copy h1{font-size:clamp(2.5rem,5.6vw,4.4rem);line-height:1.0;letter-spacing:-0.04em;font-weight:680;margin:1.3rem 0 0;max-width:16ch;text-wrap:balance;color:#f3f0e9;}
+  .hero-copy .role{display:flex;align-items:center;gap:0.7rem;margin:0.85rem 0 0;font-size:clamp(1.05rem,1.9vw,1.45rem);font-weight:600;letter-spacing:-0.01em;color:#cfd3da;}
+  .hero-copy .role::before{content:"";width:1.6rem;height:2px;border-radius:2px;background:var(--grad);flex:0 0 auto;}
+  :root[data-lang="ko"] .hero-copy .role{font-weight:600;}
+  .hero-copy .lead{max-width:44ch;margin:1.4rem 0 0;font-size:clamp(1.02rem,1.6vw,1.2rem);color:#b7bcc4;}
+  .hero-copy .lead b{color:#f3f0e9;font-weight:600;}
+  .cta-row{display:flex;flex-wrap:wrap;gap:0.7rem;margin-top:2rem;}
+  .btn{display:inline-flex;align-items:center;gap:0.55rem;font-family:var(--mono);font-size:0.85rem;padding:0.72rem 1.2rem;border-radius:10px;border:1px solid var(--line-2);color:var(--text);cursor:pointer;background:transparent;transition:transform .15s var(--ease),border-color .2s,background .2s,color .2s;}
+  .btn:hover{transform:translateY(-2px);border-color:var(--ink-line);}
+  .btn.primary{background:var(--grad);background-size:180% 100%;color:#fff;border-color:transparent;box-shadow:0 8px 24px -8px rgba(99,102,241,0.6);transition:background-position .5s var(--ease),transform .15s var(--ease),box-shadow .3s;}
+  .btn.primary:hover{background-position:100% 0;transform:translateY(-2px);box-shadow:0 12px 30px -8px rgba(192,132,252,0.7);}
+  .btn .arw{transition:transform .2s var(--ease);}
+  .btn:hover .arw{transform:translateX(3px);}
+  .hero-main .btn{color:#e7e4dd;border-color:rgba(255,255,255,0.22);background:rgba(255,255,255,0.04);}
+  .hero-main .btn.primary{color:#fff;border-color:transparent;}
+
+  .stat{padding:1.4rem 1.5rem;display:flex;flex-direction:column;justify-content:center;}
+  .stat .k{font-size:clamp(1.9rem,3vw,2.6rem);font-weight:680;letter-spacing:-0.03em;font-variant-numeric:tabular-nums;line-height:1;}
+  .stat .k .u{color:var(--muted);font-size:0.55em;margin-left:0.1rem;}
+  .stat .l{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-top:0.5rem;}
+  .stat .edit{font-family:var(--mono);font-size:0.64rem;color:var(--faint);margin-top:0.35rem;}
+  @media(max-width:820px){.hero-bento{grid-template-columns:1fr 1fr;}.hero-main{grid-column:1/3;grid-row:auto;min-height:auto;}}
+  @media(max-width:520px){.hero-bento{grid-template-columns:1fr;}.hero-main{grid-column:auto;}}
+
+  /* ===== BROWSE ===== */
+  .browse{padding:clamp(2rem,4vw,3.2rem) 0 1rem;}
+  .sec-lead{padding:0 clamp(1.25rem,4vw,3.5rem);}
+  .sec-lead h2{font-size:clamp(1.6rem,3.2vw,2.1rem);letter-spacing:-0.025em;font-weight:640;margin:0.6rem 0 0;}
+  .sec-lead p{color:var(--muted);margin:0.5rem 0 0;max-width:56ch;}
+  .row{margin-bottom:clamp(1.8rem,3.5vw,2.8rem);}
+  .row-head{display:flex;align-items:baseline;gap:0.8rem;margin:1.4rem 0 1rem;padding:0 clamp(1.25rem,4vw,3.5rem);}
+  .row-head h3{font-size:1.2rem;font-weight:640;letter-spacing:-0.01em;margin:0;}
+  .row-head .count{font-family:var(--mono);font-size:0.75rem;color:var(--faint);}
+  .row-head .arrows{margin-left:auto;display:flex;gap:0.4rem;}
+  .row-head .arrows button{width:2rem;height:2rem;border-radius:50%;border:1px solid var(--line-2);background:var(--bg-elev);color:var(--muted);cursor:pointer;font-size:0.9rem;transition:color .2s,border-color .2s;}
+  .row-head .arrows button:hover{color:var(--text);border-color:var(--ink-line);}
+  .track{display:flex;gap:0.9rem;overflow-x:auto;scroll-behavior:smooth;padding:0.4rem clamp(1.25rem,4vw,3.5rem);scroll-snap-type:x proximity;scrollbar-width:none;}
+  .track::-webkit-scrollbar{display:none;}
+
+  .tile{position:relative;flex:0 0 auto;width:var(--tile-w);height:var(--tile-h);border-radius:16px;overflow:hidden;cursor:pointer;scroll-snap-align:start;border:1px solid var(--line);transition:transform .3s var(--ease),box-shadow .3s var(--ease);color:var(--ink2,#222);transform-style:preserve-3d;}
+  .tile:hover,.tile:focus-visible{transform:translateY(-6px) scale(1.04);box-shadow:0 26px 52px -16px color-mix(in srgb,var(--pc1,#888) 60%,transparent),0 8px 20px -10px rgba(0,0,0,0.5);}
+  .tile::after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;background:linear-gradient(115deg,transparent 32%,rgba(255,255,255,0.4) 48%,transparent 64%);transform:translateX(-130%);transition:transform .75s var(--ease);}
+  .tile:hover::after,.tile:focus-visible::after{transform:translateX(130%);}
+  .tile .poster{position:absolute;inset:0;}
+  .tile .glyph{position:absolute;top:14px;left:16px;font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:color-mix(in srgb,var(--ink2,#222) 62%,transparent);}
+  .tile .num{position:absolute;right:10px;bottom:66px;font-size:5.5rem;font-weight:800;line-height:1;color:color-mix(in srgb,var(--ink2,#222) 9%,transparent);font-family:var(--mono);}
+  .tile .cap{position:absolute;left:0;right:0;bottom:0;padding:1.1rem 1rem 0.95rem;background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--pc1,#fff) 92%,transparent));transition:opacity .25s var(--ease);}
+  .tile .cap .t{font-weight:660;font-size:1.05rem;letter-spacing:-0.01em;color:var(--ink2,#222);}
+  .tile .cap .s{font-family:var(--mono);font-size:0.7rem;color:color-mix(in srgb,var(--ink2,#222) 70%,transparent);margin-top:0.15rem;}
+  .tile .hover-actions{position:absolute;left:0;right:0;bottom:0;padding:0.8rem 1rem;display:flex;gap:0.5rem;opacity:0;transform:translateY(8px);transition:opacity .25s var(--ease),transform .25s var(--ease);}
+  .tile:hover .hover-actions,.tile:focus-within .hover-actions{opacity:1;transform:none;}
+  .tile:hover .cap,.tile:focus-within .cap{opacity:0;}
+  .tile .hover-actions .mini{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:0.4rem;font-family:var(--mono);font-size:0.74rem;padding:0.55rem;border-radius:9px;background:color-mix(in srgb,var(--ink2,#222) 14%,transparent);color:var(--ink2,#222);border:1px solid color-mix(in srgb,var(--ink2,#222) 22%,transparent);}
+  .tile .hover-actions .mini.acc{background:var(--ink2,#222);color:#fff;border-color:var(--ink2,#222);}
+
+  .tile.ghost{display:grid;place-items:center;background:transparent;border-style:dashed;color:var(--faint);text-align:center;}
+  .tile.ghost:hover{transform:translateY(-6px);color:var(--text);border-color:var(--ink-line);box-shadow:none;}
+  .tile.ghost .plus{font-size:2rem;}
+  .tile.ghost span{font-family:var(--mono);font-size:0.76rem;padding:0 1rem;margin-top:0.4rem;}
+
+  /* ===== JOURNEY TIMELINE ===== */
+  .journey{padding:clamp(3rem,6vw,5rem) 0 clamp(2rem,4vw,3rem);border-top:1px solid var(--line);margin-top:2rem;}
+  .tl-scroll{display:flex;gap:0;overflow-x:auto;padding:2.5rem clamp(1.25rem,4vw,3.5rem) 1rem;scrollbar-width:none;scroll-snap-type:x proximity;}
+  .tl-scroll::-webkit-scrollbar{display:none;}
+  .ms{position:relative;flex:0 0 auto;width:260px;padding:0 1.4rem;scroll-snap-align:start;}
+  .ms::before{content:"";position:absolute;top:-1.55rem;left:0;right:0;height:2px;background:var(--grad);background-size:400% 100%;opacity:0.85;transform-origin:left;animation:gshift 10s linear infinite;}
+  .ms:first-child::before{left:1.4rem;border-radius:2px 0 0 2px;}
+  .ms:last-child::before{right:50%;}
+  .ms .node{position:absolute;top:-1.55rem;left:1.4rem;width:16px;height:16px;border-radius:50%;transform:translate(-50%,-42%);border:3px solid var(--bg);animation:floaty 4s var(--ease) infinite;}
+  .ms:nth-child(2n) .node{animation-delay:-2s;}
+  .ms .yr{font-family:var(--mono);font-size:1.55rem;font-weight:720;letter-spacing:-0.01em;font-variant-numeric:tabular-nums;background:var(--grad);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gshift 8s linear infinite;}
+  .ms .badge{display:inline-block;font-family:var(--mono);font-size:0.64rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.15rem 0.5rem;border-radius:999px;margin-left:0.5rem;color:#20222a;vertical-align:middle;}
+  .ms h4{margin:0.6rem 0 0.35rem;font-size:1.05rem;font-weight:640;letter-spacing:-0.01em;}
+  .ms p{margin:0;color:var(--muted);font-size:0.9rem;}
+
+  /* ===== BOTTOM BENTO ===== */
+  .bento-bottom{display:grid;grid-template-columns:repeat(3,1fr);gap:0.9rem;padding-top:clamp(2rem,4vw,3rem);padding-bottom:clamp(3rem,6vw,5rem);}
+  .bcell{border:1px solid var(--line);border-radius:18px;background:var(--bg-elev);padding:clamp(1.5rem,2.5vw,2rem);}
+  .bcell.about{grid-column:span 2;}
+  .bcell h3.h{font-size:1.4rem;font-weight:660;letter-spacing:-0.02em;margin:0.8rem 0 0.9rem;}
+  .bcell p{color:var(--muted);margin:0 0 1rem;max-width:56ch;}
+  .bcell p b{color:var(--text);font-weight:600;}
+  .curr ul{list-style:none;margin:0.8rem 0 0;padding:0;display:flex;flex-direction:column;gap:0.75rem;}
+  .curr li{display:flex;gap:0.6rem;font-size:0.95rem;color:var(--text);}
+  .curr li::before{content:"▹";color:var(--muted);}
+  .bcell.stack{grid-column:span 2;}
+  .stack-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-top:1rem;}
+  @media(max-width:520px){.stack-cols{grid-template-columns:repeat(2,1fr);}}
+  .stack-cols h4{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin:0 0 0.7rem;}
+  .stack-cols ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.45rem;}
+  .stack-cols li{color:var(--muted);font-size:0.9rem;}
+
+  /* pastel contact CTA (cool pastel, not warm) */
+  .bcell.contact{background:linear-gradient(150deg,#e7f7ef,#bfe8d3 120%);color:#12352a;border-color:transparent;display:flex;flex-direction:column;justify-content:space-between;}
+  .bcell.contact .k{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:#2a6b52;}
+  .bcell.contact h3{font-size:clamp(1.5rem,2.4vw,1.9rem);letter-spacing:-0.02em;font-weight:680;margin:0.8rem 0 0.3rem;color:#0f2c22;}
+  .bcell.contact .mail{font-family:var(--mono);font-size:0.9rem;color:#2a6b52;word-break:break-all;}
+  .bcell.contact .cbtns{display:flex;gap:0.5rem;margin-top:1.4rem;flex-wrap:wrap;}
+  .bcell.contact .cbtn{font-family:var(--mono);font-size:0.8rem;padding:0.55rem 0.9rem;border-radius:9px;border:1px solid rgba(15,44,34,0.28);color:#0f2c22;}
+  .bcell.contact .cbtn.solid{background:#0f2c22;color:#e7f7ef;border-color:#0f2c22;}
+  @media(max-width:760px){.bento-bottom{grid-template-columns:1fr;}.bcell.about,.bcell.stack{grid-column:auto;}}
+
+  footer{border-top:1px solid var(--line);padding:2.2rem 0;}
+  .foot-inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;align-items:center;}
+  .foot-inner .mono{font-size:0.78rem;color:var(--faint);}
+  .foot-links{display:flex;gap:1.2rem;}
+  .foot-links a{font-family:var(--mono);font-size:0.8rem;color:var(--muted);}
+  .foot-links a:hover{color:var(--text);}
+
+  .tags{display:flex;flex-wrap:wrap;gap:0.4rem;}
+  .tag{font-family:var(--mono);font-size:0.72rem;color:var(--muted);border:1px solid var(--line-2);border-radius:6px;padding:0.2rem 0.55rem;}
+
+  /* modal */
+  .modal{position:fixed;inset:0;z-index:100;display:none;align-items:flex-start;justify-content:center;padding:clamp(1rem,5vh,4rem) 1rem;overflow-y:auto;}
+  .modal.open{display:flex;}
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.72);backdrop-filter:blur(6px);opacity:0;transition:opacity .3s var(--ease);}
+  .modal.open .modal-backdrop{opacity:1;}
+  .modal-panel{position:relative;width:min(860px,100%);background:var(--bg-elev);border:1px solid var(--line-2);border-radius:20px;overflow:hidden;opacity:0;transform:translateY(24px) scale(0.97);transition:opacity .32s var(--ease),transform .32s var(--ease);}
+  .modal.open .modal-panel{opacity:1;transform:none;}
+  .modal-hero{position:relative;height:clamp(190px,28vh,260px);}
+  .modal-hero .poster{position:absolute;inset:0;}
+  /* keep the title on a bright band so dark ink stays readable in both themes; darken only the very bottom edge for separation */
+  .modal-hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,0.28) 0%,transparent 26%,transparent 82%,rgba(0,0,0,0.06));}
+  .modal-hero .htitle{position:absolute;left:clamp(1.4rem,4vw,2.2rem);right:clamp(1.4rem,4vw,2.2rem);bottom:1.2rem;z-index:2;}
+  .modal-hero .htitle .k{font-family:var(--mono);font-size:0.74rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--mink,#333);opacity:0.82;}
+  .modal-hero .htitle h3{margin:0.35rem 0 0;font-size:clamp(1.7rem,4vw,2.5rem);letter-spacing:-0.02em;font-weight:720;color:var(--mink,#222);text-wrap:balance;}
+  .modal-close{position:absolute;top:1rem;right:1rem;z-index:3;width:2.4rem;height:2.4rem;border-radius:50%;border:1px solid rgba(0,0,0,0.2);background:rgba(255,255,255,0.8);color:#222;cursor:pointer;font-size:1.1rem;display:grid;place-items:center;transition:background .2s,transform .2s,color .2s;}
+  .modal-close:hover{background:#222;color:#fff;transform:rotate(90deg);}
+  .modal-body{padding:clamp(1.4rem,4vw,2.2rem);display:grid;grid-template-columns:1.6fr 1fr;gap:clamp(1.5rem,4vw,2.6rem);}
+  @media(max-width:640px){.modal-body{grid-template-columns:1fr;}}
+  .modal-body .lede{font-size:1.05rem;color:var(--text);margin:0 0 1.2rem;}
+  .modal-body p{color:var(--muted);margin:0 0 1.1rem;}
+  .modal-body h4{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--faint);margin:1.4rem 0 0.7rem;}
+  .modal-body h4:first-child{margin-top:0;}
+  .hl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.6rem;}
+  .hl li{display:flex;gap:0.6rem;color:var(--muted);font-size:0.95rem;}
+  .hl li::before{content:"→";color:var(--text);}
+  .modal-actions{display:flex;gap:0.6rem;margin-top:1.6rem;flex-wrap:wrap;}
+  .meta-row{display:flex;flex-direction:column;gap:0.25rem;padding:0.7rem 0;border-bottom:1px solid var(--line);}
+  .meta-row .l{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--faint);}
+  .meta-row .v{font-size:0.95rem;}
+
+  .reveal{opacity:0;transform:translateY(22px);filter:blur(8px);transition:opacity .8s var(--ease),transform .8s var(--ease),filter .8s var(--ease);}
+  .reveal.in{opacity:1;transform:none;filter:none;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;transition:none;}
+    .tile,.btn,.modal-panel,.modal-backdrop{transition:none !important;}
+    .track,.tl-scroll{scroll-behavior:auto;}
+  }
+</style>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">JYPark.dev</a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#browse" class="sec"><span lang="en">work</span><span lang="ko">작업</span></a>
+      <a href="#journey" class="sec"><span lang="en">journey</span><span lang="ko">여정</span></a>
+      <a href="#about" class="sec"><span lang="en">about</span><span lang="ko">소개</span></a>
+      <a href="#contact"><span lang="en">contact</span><span lang="ko">연락처</span></a>
+      <button class="icon-btn" id="langBtn" aria-label="Toggle language">KO</button>
+      <button class="icon-btn" id="themeBtn" aria-label="Toggle theme" title="Toggle theme">◐</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- TOP BENTO -->
+  <section id="top" class="hero-bento wrap">
+    <div class="cell hero-main">
+      <div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <canvas class="hero-constellation" aria-hidden="true"></canvas>
+      <div class="hero-copy">
+        <span class="bb-tag"><span class="dot"></span> <span class="mono"><span lang="en">available for new work</span><span lang="ko">새로운 기회를 찾고 있습니다</span></span></span>
+        <h1><span lang="en">Ji Yong Park</span><span lang="ko">박지용</span></h1>
+        <p class="role"><span lang="en">Software Engineer</span><span lang="ko">소프트웨어 엔지니어</span></p>
+        <p class="lead">
+          <span lang="en">I build <b>reliable web systems</b> end&#8209;to&#8209;end. Browse my work, then pick a title to see how it was built.</span>
+          <span lang="ko">저는 <b>안정적인 웹 시스템</b>을 처음부터 끝까지 만듭니다. 아래에서 작업을 둘러보고, 제목을 눌러 어떻게 만들었는지 확인해 보세요.</span>
+        </p>
+        <div class="cta-row">
+          <a href="#browse" class="btn primary">▶ <span lang="en">Browse work</span><span lang="ko">작업 둘러보기</span></a>
+          <a href="#" class="btn"><span lang="en">Résumé (PDF)</span><span lang="ko">이력서 (PDF)</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="cell stat">
+      <div class="k">5<span class="u">yrs</span></div>
+      <div class="l"><span lang="en">Experience</span><span lang="ko">경력</span></div>
+      <div class="edit">// <span lang="en">single value · edit anytime</span><span lang="ko">단일 값 · 언제든 수정</span></div>
+    </div>
+    <div class="cell stat">
+      <div class="k">12<span class="u">+</span></div>
+      <div class="l"><span lang="en">Projects shipped</span><span lang="ko">완료 프로젝트</span></div>
+      <div class="edit">// placeholder</div>
+    </div>
+    <div class="cell stat">
+      <div class="k">TS<span class="u">/</span>Go</div>
+      <div class="l"><span lang="en">Primary stack</span><span lang="ko">주력 스택</span></div>
+      <div class="edit">// placeholder</div>
+    </div>
+  </section>
+
+  <!-- BROWSE -->
+  <section id="browse" class="browse" aria-label="Project catalog">
+    <div class="sec-lead reveal">
+      <span class="eyebrow"><span lang="en">Selected work</span><span lang="ko">선정 작업</span></span>
+      <h2><span lang="en">Browse the projects.</span><span lang="ko">프로젝트를 둘러보세요.</span></h2>
+      <p><span lang="en">Scroll each row, then open a title for the full story: problem, role, stack, and links.</span><span lang="ko">각 줄을 스크롤하고 제목을 열어 문제·역할·스택·링크까지 전체 내용을 확인하세요.</span></p>
+    </div>
+    <div id="rows"></div>
+  </section>
+
+  <!-- JOURNEY -->
+  <section id="journey" class="journey">
+    <div class="sec-lead reveal">
+      <span class="eyebrow"><span lang="en">Journey</span><span lang="ko">여정</span></span>
+      <h2><span lang="en">2017 → now.</span><span lang="ko">2017년부터 지금까지.</span></h2>
+      <p><span lang="en">From graduation to today. The milestones along the way.</span><span lang="ko">졸업부터 오늘까지, 그동안의 이정표들.</span></p>
+    </div>
+    <div class="tl-scroll" id="timeline"></div>
+  </section>
+
+  <!-- BOTTOM BENTO -->
+  <section class="bento-bottom wrap">
+    <div class="bcell about reveal" id="about">
+      <span class="eyebrow"><span lang="en">About</span><span lang="ko">소개</span></span>
+      <h3 class="h"><span lang="en">Pragmatic engineer, product-minded.</span><span lang="ko">실용적이고 제품 지향적인 엔지니어.</span></h3>
+      <p>
+        <span lang="en">I'm a software engineer with <b>5 years</b> of hands&#8209;on experience. The last four were full&#8209;time SWE roles, with earlier contract and freelance work. <span class="mono" style="color:var(--faint);font-size:0.85em;">(placeholder)</span></span>
+        <span lang="ko"><b>5년차</b> 소프트웨어 엔지니어입니다 — 최근 4년은 정규직 SWE로, 그 전에는 계약·프리랜스로 일했습니다. <span class="mono" style="color:var(--faint);font-size:0.85em;">(임시)</span></span>
+      </p>
+      <p>
+        <span lang="en">I care about the parts that keep software alive: clear data models, honest error handling, tests that catch real regressions, and interfaces that don't fight the user. I like owning a feature from <b>schema to screen</b>.</span>
+        <span lang="ko">저는 소프트웨어를 살아있게 하는 부분을 중요하게 생각합니다 — 명확한 데이터 모델, 정직한 에러 처리, 실제 회귀를 잡는 테스트, 사용자를 방해하지 않는 인터페이스. <b>스키마부터 화면까지</b> 기능을 온전히 책임지는 걸 좋아합니다.</span>
+      </p>
+    </div>
+    <div class="bcell curr reveal">
+      <span class="eyebrow"><span lang="en">Currently</span><span lang="ko">현재</span></span>
+      <ul>
+        <li><span lang="en">Building this portfolio in Next.js</span><span lang="ko">Next.js로 이 포트폴리오 제작 중</span></li>
+        <li><span lang="en">Writing more Go for services</span><span lang="ko">서비스용 Go 코드 늘리는 중</span></li>
+        <li><span lang="en">Open to interesting problems</span><span lang="ko">흥미로운 문제에 열려 있음</span></li>
+      </ul>
+    </div>
+    <div class="bcell stack reveal" id="stack">
+      <span class="eyebrow"><span lang="en">Stack</span><span lang="ko">스택</span></span>
+      <div class="stack-cols">
+        <div><h4><span lang="en">Languages</span><span lang="ko">언어</span></h4><ul><li>TypeScript</li><li>Go</li><li>Python</li><li>SQL</li></ul></div>
+        <div><h4><span lang="en">Frameworks</span><span lang="ko">프레임워크</span></h4><ul><li>Next.js / React</li><li>Node.js</li><li>Tailwind</li><li>Framer Motion</li></ul></div>
+        <div><h4><span lang="en">Infra &amp; Data</span><span lang="ko">인프라·데이터</span></h4><ul><li>PostgreSQL</li><li>Docker</li><li>AWS</li><li>GH Actions</li></ul></div>
+        <div><h4><span lang="en">Practices</span><span lang="ko">개발 방식</span></h4><ul><li>Testing</li><li>CI / CD</li><li>Code review</li><li>Observability</li></ul></div>
+      </div>
+    </div>
+    <div class="bcell contact reveal" id="contact">
+      <div>
+        <span class="k"><span lang="en">Contact</span><span lang="ko">연락처</span></span>
+        <h3><span lang="en">Let's build something.</span><span lang="ko">함께 만들어요.</span></h3>
+        <span class="mail">toboy93@gmail.com</span>
+      </div>
+      <div class="cbtns">
+        <a href="#" class="cbtn">GitHub</a>
+        <a href="#" class="cbtn">LinkedIn</a>
+        <a href="mailto:toboy93@gmail.com" class="cbtn solid"><span lang="en">Email me →</span><span lang="ko">이메일 보내기 →</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span class="mono"><span lang="en">© 2026 Ji Yong Park · built with Next.js</span><span lang="ko">© 2026 박지용 · Next.js로 제작</span></span>
+    <div class="foot-links"><a href="#">GitHub</a><a href="#">LinkedIn</a><a href="#top"><span lang="en">Back to top ↑</span><span lang="ko">맨 위로 ↑</span></a></div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-panel" id="modalPanel">
+    <div class="modal-hero">
+      <div class="poster" id="mHero"></div>
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      <div class="htitle"><div class="k" id="mKicker"></div><h3 id="modalTitle"></h3></div>
+    </div>
+    <div class="modal-body">
+      <div>
+        <p class="lede" id="mLede"></p>
+        <p id="mDesc"></p>
+        <h4 id="mHlLabel">Highlights</h4>
+        <ul class="hl" id="mHighlights"></ul>
+        <div class="modal-actions" id="mActions"></div>
+      </div>
+      <div>
+        <div class="meta-row"><span class="l" id="mYearL">Year</span><span class="v" id="mYear"></span></div>
+        <div class="meta-row"><span class="l" id="mRoleL">Role</span><span class="v" id="mRole"></span></div>
+        <div class="meta-row"><span class="l" id="mTypeL">Type</span><span class="v" id="mType"></span></div>
+        <h4>Stack</h4>
+        <div class="tags" id="mStack"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var PAS={butter:['#fff6da','#ffe3a0','#7a5610'],sky:['#e6f1fe','#bcd9fb','#1d4b7d'],lavender:['#efe8fe','#d3c2f5','#4a2f7a'],mint:['#e7f7ef','#bfe8d3','#1f5d43'],peach:['#ffeede','#ffcdaa','#8a4522'],rose:['#ffe6ec','#ffbccd','#8a2745']};
+  function poster(k){var c=PAS[k]||PAS.sky;return 'radial-gradient(120% 85% at 18% 10%, #fff 0%, transparent 42%), radial-gradient(120% 80% at 85% 100%, '+c[1]+', transparent 60%), linear-gradient(150deg, '+c[0]+', '+c[1]+' 145%)';}
+  function lang(){return document.documentElement.getAttribute('data-lang')||'en';}
+  function esc(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+
+  var UI={en:{details:'Details',live:'↗ Live',code:'</> Code',add:'add project → paste a GitHub link',hl:'Highlights',year:'Year',role:'Role',type:'Type'},
+          ko:{details:'자세히',live:'↗ 라이브',code:'</> 코드',add:'프로젝트 추가 → GitHub 링크 붙여넣기',hl:'핵심 성과',year:'연도',role:'역할',type:'유형'}};
+
+  var PROJECTS=[
+    {id:'alpha',title:'Project Alpha',pas:'butter',stack:['TypeScript','Next.js','tRPC','Prisma','Postgres'],links:{live:'#',code:'#'},
+     en:{kicker:'Featured',role:'Lead / full-stack',type:'Web app',lede:'The one project you want people to open first.',desc:'Replace this with the problem it solved, your role, and the outcome. The modal gives every project room for a real story.',highlights:['What problem it solved','Your specific contribution','A measurable result you are proud of']},
+     ko:{kicker:'대표작',role:'리드 / 풀스택',type:'웹 앱',lede:'사람들이 가장 먼저 열어보길 바라는 프로젝트.',desc:'해결한 문제, 맡은 역할, 결과로 바꿔 넣으세요. 모달은 프로젝트마다 제대로 된 이야기를 담을 공간을 줍니다.',highlights:['어떤 문제를 풀었는지','내가 기여한 부분','자랑할 만한 정량적 결과']}},
+    {id:'beta',title:'Project Beta',pas:'sky',stack:['Go','gRPC','Docker','Redis'],links:{live:'#',code:'#'},
+     en:{kicker:'Web app',role:'Backend',type:'Service',lede:'A service you designed and shipped.',desc:'Pull the description, stack, and links straight from the GitHub repo when you wire it in.',highlights:['API design decisions','Reliability / performance work','What you learned']},
+     ko:{kicker:'웹 앱',role:'백엔드',type:'서비스',lede:'직접 설계하고 배포한 서비스.',desc:'연결할 때 GitHub 저장소에서 설명·스택·링크를 그대로 가져오면 됩니다.',highlights:['API 설계 결정','안정성 / 성능 작업','배운 점']}},
+    {id:'gamma',title:'Project Gamma',pas:'lavender',stack:['React','TanStack','Recharts','Tailwind'],links:{live:'#',code:'#'},
+     en:{kicker:'Web app',role:'Frontend',type:'Dashboard',lede:'An interface-heavy project that shows your front-end range.',desc:'Great candidate for screenshots later — the modal hero can hold a real image.',highlights:['Complex UI state handled cleanly','Accessibility considerations','Data-viz choices']},
+     ko:{kicker:'웹 앱',role:'프론트엔드',type:'대시보드',lede:'프론트엔드 폭을 보여주는 인터페이스 중심 프로젝트.',desc:'나중에 스크린샷 넣기 좋은 후보 — 모달 상단에 실제 이미지를 넣을 수 있습니다.',highlights:['복잡한 UI 상태를 깔끔하게 처리','접근성 고려','데이터 시각화 선택']}},
+    {id:'delta',title:'devkit',pas:'mint',stack:['TypeScript','Node.js','ESBuild'],links:{code:'#'},
+     en:{kicker:'Open source',role:'Author',type:'CLI / library',lede:'An open-source tool other developers use.',desc:'Code-only is fine here — link the repo and package page.',highlights:['Why it exists','Adoption / stars if notable','Design of the public API']},
+     ko:{kicker:'오픈소스',role:'제작자',type:'CLI / 라이브러리',lede:'다른 개발자들이 쓰는 오픈소스 도구.',desc:'코드 링크만 있어도 충분 — 저장소와 패키지 페이지를 연결하세요.',highlights:['왜 만들었는지','채택 / 스타 수(있다면)','공개 API 설계']}},
+    {id:'epsilon',title:'schema-lint',pas:'peach',stack:['Go','CLI'],links:{code:'#'},
+     en:{kicker:'Open source',role:'Author',type:'Library',lede:'A focused utility you extracted and shared.',desc:'Placeholder — describe the itch it scratched.',highlights:['Single clear purpose','Tests & CI','Docs']},
+     ko:{kicker:'오픈소스',role:'제작자',type:'라이브러리',lede:'따로 빼내 공유한 집중형 유틸리티.',desc:'임시 — 어떤 불편을 해결했는지 설명하세요.',highlights:['하나의 명확한 목적','테스트 & CI','문서화']}},
+    {id:'zeta',title:'raytracer',pas:'rose',stack:['C++','Math'],links:{code:'#'},
+     en:{kicker:'Experiment',role:'Solo',type:'For fun',lede:'The fun stuff that shows curiosity.',desc:'Experiments signal that you build for the joy of it, not just for work.',highlights:['What made it hard','What you explored']},
+     ko:{kicker:'실험',role:'개인',type:'취미',lede:'호기심을 보여주는 재미난 작업.',desc:'실험은 일이 아니라 즐거움으로도 만든다는 신호가 됩니다.',highlights:['무엇이 어려웠는지','무엇을 탐구했는지']}}
+  ];
+  var ROWS=[
+    {en:'Featured',ko:'대표작',ids:['alpha','beta','gamma']},
+    {en:'Web Applications',ko:'웹 애플리케이션',ids:['alpha','gamma','beta']},
+    {en:'Open Source & Tools',ko:'오픈소스 · 도구',ids:['delta','epsilon']},
+    {en:'Experiments',ko:'실험',ids:['zeta']}
+  ];
+  var MILESTONES=[
+    {yr:'2017',pas:'lavender',en:{tag:'Education',title:'Graduated university',desc:'B.S. degree — placeholder.'},ko:{tag:'학력',title:'대학 졸업',desc:'학사 졸업 — 임시 내용.'}},
+    {yr:'2018',pas:'peach',en:{tag:'Freelance',title:'Contract & freelance',desc:'First paid dev work (용역 / 프리랜스).'},ko:{tag:'프리랜스',title:'계약 · 프리랜스',desc:'첫 유료 개발 일 (용역 / 프리랜스).'}},
+    {yr:'2020',pas:'sky',en:{tag:'Work',title:'Joined Company B',desc:'First full-time SWE role.'},ko:{tag:'경력',title:'B사 입사',desc:'첫 정규직 SWE.'}},
+    {yr:'2022',pas:'sky',en:{tag:'Work',title:'Joined Company A',desc:'Bigger scope, more ownership.'},ko:{tag:'경력',title:'A사 입사',desc:'더 넓은 범위와 책임.'}},
+    {yr:'2024',pas:'mint',en:{tag:'Project',title:'Shipped Project Alpha',desc:'Flagship project — placeholder.'},ko:{tag:'프로젝트',title:'Project Alpha 출시',desc:'대표 프로젝트 — 임시.'}},
+    {yr:'2026',pas:'rose',en:{tag:'Now',title:'Open to work',desc:'Looking for the next thing.'},ko:{tag:'현재',title:'구직 중',desc:'다음 도전을 찾는 중.'}}
+  ];
+  var byId={};PROJECTS.forEach(function(p){byId[p.id]=p;});
+
+  function renderRows(){
+    var L=lang(),el=document.getElementById('rows');el.innerHTML='';
+    ROWS.forEach(function(row,ri){
+      var sec=document.createElement('div');sec.className='row';
+      var head=document.createElement('div');head.className='row-head';
+      head.innerHTML='<h3>'+row[L]+'</h3><span class="count">'+row.ids.length+'</span><div class="arrows"><button data-dir="-1" aria-label="left">‹</button><button data-dir="1" aria-label="right">›</button></div>';
+      var track=document.createElement('div');track.className='track';
+      row.ids.forEach(function(id){
+        var p=byId[id];if(!p)return;var d=p[L],c=PAS[p.pas]||PAS.sky;
+        var t=document.createElement('button');t.className='tile';t.setAttribute('data-id',id);
+        t.style.setProperty('--ink2',c[2]);t.style.setProperty('--pc1',c[1]);
+        t.setAttribute('aria-label',p.title);
+        t.innerHTML='<div class="poster" style="background:'+poster(p.pas)+'"></div><span class="glyph">'+d.kicker+'</span><span class="num">'+p.title.charAt(0)+'</span><div class="cap"><div class="t">'+p.title+'</div><div class="s">'+(p.id==='zeta'?'2021':d.type)+'</div></div><div class="hover-actions"><span class="mini acc">'+UI[L].details+'</span><span class="mini">'+(p.links.live?UI[L].live:UI[L].code)+'</span></div>';
+        track.appendChild(t);
+      });
+      if(ri===ROWS.length-1){var g=document.createElement('div');g.className='tile ghost';g.innerHTML='<div><div class="plus">+</div><span>'+UI[L].add+'</span></div>';track.appendChild(g);}
+      head.querySelectorAll('.arrows button').forEach(function(b){b.addEventListener('click',function(){track.scrollBy({left:parseInt(b.dataset.dir)*track.clientWidth*0.8,behavior:'smooth'});});});
+      sec.appendChild(head);sec.appendChild(track);el.appendChild(sec);
+    });
+  }
+  function renderTimeline(){
+    var L=lang(),el=document.getElementById('timeline');el.innerHTML='';
+    MILESTONES.forEach(function(m){
+      var d=m[L],c=PAS[m.pas]||PAS.sky;
+      var ms=document.createElement('div');ms.className='ms';
+      ms.innerHTML='<span class="node" style="background:'+c[1]+';box-shadow:0 0 0 4px '+c[0]+'22, 0 0 16px 2px '+c[1]+'"></span><span class="yr">'+m.yr+'</span><span class="badge" style="background:'+c[1]+'">'+d.tag+'</span><h4>'+d.title+'</h4><p>'+d.desc+'</p>';
+      el.appendChild(ms);
+    });
+  }
+
+  var modal=document.getElementById('modal'),lastFocus=null;
+  function openModal(id){
+    var p=byId[id];if(!p)return;var L=lang(),d=p[L],c=PAS[p.pas]||PAS.sky;
+    lastFocus=document.activeElement;
+    document.getElementById('mHero').style.background=poster(p.pas);
+    document.getElementById('modalPanel').style.setProperty('--mink',c[2]);
+    document.getElementById('mKicker').textContent=d.kicker;
+    document.getElementById('modalTitle').textContent=p.title;
+    document.getElementById('mLede').textContent=d.lede;
+    document.getElementById('mDesc').textContent=d.desc;
+    document.getElementById('mHlLabel').textContent=UI[L].hl;
+    document.getElementById('mYearL').textContent=UI[L].year;
+    document.getElementById('mRoleL').textContent=UI[L].role;
+    document.getElementById('mTypeL').textContent=UI[L].type;
+    document.getElementById('mYear').textContent=(p.id==='alpha'?'2024':p.id==='zeta'?'2021':p.id==='delta'||p.id==='epsilon'?'2022':'2023');
+    document.getElementById('mRole').textContent=d.role;
+    document.getElementById('mType').textContent=d.type;
+    document.getElementById('mHighlights').innerHTML=d.highlights.map(function(h){return '<li>'+esc(h)+'</li>';}).join('');
+    document.getElementById('mStack').innerHTML=p.stack.map(function(s){return '<span class="tag">'+esc(s)+'</span>';}).join('');
+    var acts=[];if(p.links.live)acts.push('<a class="btn primary" href="'+p.links.live+'">▶ '+(L==='ko'?'라이브 사이트':'Live site')+'</a>');
+    if(p.links.code)acts.push('<a class="btn" href="'+p.links.code+'">&lt;/&gt; '+(L==='ko'?'소스 코드':'Source code')+'</a>');
+    document.getElementById('mActions').innerHTML=acts.join('');
+    modal.classList.add('open');document.body.style.overflow='hidden';document.getElementById('modalClose').focus();
+  }
+  function closeModal(){modal.classList.remove('open');document.body.style.overflow='';if(lastFocus)lastFocus.focus();}
+  document.addEventListener('click',function(e){var tile=e.target.closest('.tile[data-id]');if(tile){openModal(tile.getAttribute('data-id'));return;}if(e.target.closest('[data-close]')||e.target.id==='modalClose'){closeModal();}});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});
+
+  /* lang + theme toggles */
+  (function(){
+    var root=document.documentElement;
+    root.setAttribute('data-lang','en');
+    var lb=document.getElementById('langBtn');
+    lb.addEventListener('click',function(){var n=lang()==='en'?'ko':'en';root.setAttribute('data-lang',n);lb.textContent=n==='en'?'KO':'EN';renderRows();renderTimeline();});
+    var tb=document.getElementById('themeBtn');
+    tb.addEventListener('click',function(){var cur=root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');root.setAttribute('data-theme',cur==='dark'?'light':'dark');});
+  })();
+
+  var REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* subtle 3D tilt on project tiles */
+  function attachTilt(){
+    if(REDUCE)return;
+    document.querySelectorAll('.tile:not(.ghost)').forEach(function(t){
+      t.addEventListener('pointermove',function(e){
+        var r=t.getBoundingClientRect(),px=(e.clientX-r.left)/r.width-0.5,py=(e.clientY-r.top)/r.height-0.5;
+        t.style.transform='perspective(650px) rotateY('+(px*7)+'deg) rotateX('+(-py*7)+'deg) translateY(-6px) scale(1.04)';
+      });
+      t.addEventListener('pointerleave',function(){t.style.transform='';});
+    });
+  }
+  /* re-attach tilt after every (re)render, including language switch */
+  var _renderRows=renderRows;
+  renderRows=function(){ _renderRows(); attachTilt(); };
+
+  renderRows(); renderTimeline();
+
+  /* stat count-up on load */
+  (function(){
+    if(REDUCE)return;
+    document.querySelectorAll('.stat .k').forEach(function(k){
+      var t0=k.firstChild;
+      if(!t0||t0.nodeType!==3)return;
+      var n=parseInt(t0.textContent.trim(),10); if(isNaN(n))return;
+      var start=null,dur=1100;
+      function step(ts){if(!start)start=ts;var p=Math.min((ts-start)/dur,1);t0.textContent=Math.round((1-Math.pow(1-p,3))*n);if(p<1)requestAnimationFrame(step);}
+      t0.textContent='0';requestAnimationFrame(step);
+    });
+  })();
+
+  /* reveal */
+  (function(){var els=document.querySelectorAll('.reveal');if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in');});return;}var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{rootMargin:'0px 0px -10% 0px',threshold:0.08});els.forEach(function(e){io.observe(e);});})();
+
+  /* hero constellation — subtle "night sky" network, brand-tinted nodes + line-to-cursor */
+  (function(){
+    var cv=document.querySelector('.hero-constellation'); if(!cv) return;
+    var host=cv.parentElement, ctx=cv.getContext('2d');
+    var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var DPR=Math.min(window.devicePixelRatio||1,2), W=1, H=1, pts=[], raf=0;
+    var mouse={x:-9999,y:-9999};
+    var TINT=['#22d3ee','#6366f1','#c084fc','#f472b6'];
+    function size(){
+      var r=host.getBoundingClientRect();
+      W=cv.width=Math.max(1,Math.round(r.width*DPR));
+      H=cv.height=Math.max(1,Math.round(r.height*DPR));
+      cv.style.width=r.width+'px'; cv.style.height=r.height+'px';
+      var n=Math.max(24,Math.min(56,Math.floor(r.width*r.height/13000)));
+      pts=[]; for(var i=0;i<n;i++){
+        var tint=Math.random()<0.22;
+        pts.push({x:Math.random()*W,y:Math.random()*H,
+          vx:(Math.random()-0.5)*0.11*DPR,vy:(Math.random()-0.5)*0.11*DPR,
+          r:(tint?1.7:1.05)*DPR*(0.7+Math.random()*0.6),
+          c:tint?TINT[(Math.random()*TINT.length)|0]:'#e8ecf2',
+          tw:Math.random()*6.283});
+      }
+    }
+    var LINK=118*DPR, MLINK=165*DPR;
+    function frame(t){
+      ctx.clearRect(0,0,W,H);
+      for(var i=0;i<pts.length;i++){
+        var p=pts[i]; p.x+=p.vx; p.y+=p.vy;
+        if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1;
+        for(var j=i+1;j<pts.length;j++){
+          var q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=Math.hypot(dx,dy);
+          if(d<LINK){ctx.globalAlpha=(1-d/LINK)*0.15;ctx.strokeStyle='#aab3c2';ctx.lineWidth=DPR*0.6;
+            ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();}
+        }
+        var mx=p.x-mouse.x,my=p.y-mouse.y,mdist=Math.hypot(mx,my);
+        if(mdist<MLINK){ctx.globalAlpha=(1-mdist/MLINK)*0.28;ctx.strokeStyle=p.c;ctx.lineWidth=DPR*0.7;
+          ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(mouse.x,mouse.y);ctx.stroke();}
+      }
+      for(var k=0;k<pts.length;k++){
+        var s=pts[k],tw=reduce?1:(0.6+0.4*Math.sin(t/900+s.tw));
+        ctx.globalAlpha=0.85*tw; ctx.fillStyle=s.c;
+        ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,6.283); ctx.fill();
+      }
+      ctx.globalAlpha=1;
+      if(!reduce) raf=requestAnimationFrame(frame);
+    }
+    size(); addEventListener('resize',function(){cancelAnimationFrame(raf);size();if(!reduce)raf=requestAnimationFrame(frame);else frame(0);});
+    host.addEventListener('pointermove',function(e){var r=host.getBoundingClientRect();mouse.x=(e.clientX-r.left)*DPR;mouse.y=(e.clientY-r.top)*DPR;});
+    host.addEventListener('pointerleave',function(){mouse.x=mouse.y=-9999;});
+    if(reduce) frame(0); else raf=requestAnimationFrame(frame);
+  })();
+
+  /* ambient canvas (mono dots) */
+  (function(){
+    var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var cv=document.getElementById('bbCanvas');if(!cv)return;var ctx=cv.getContext('2d'),w,h,pts,raf;
+    function resize(){w=cv.width=cv.offsetWidth*devicePixelRatio;h=cv.height=cv.offsetHeight*devicePixelRatio;pts=Array.from({length:Math.min(42,Math.floor(w/50))},function(){return {x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-0.5)*0.12,vy:(Math.random()-0.5)*0.12};});}
+    function draw(){ctx.clearRect(0,0,w,h);for(var i=0;i<pts.length;i++){var p=pts[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;for(var j=i+1;j<pts.length;j++){var q=pts[j],dx=p.x-q.x,dy=p.y-q.y,dd=Math.hypot(dx,dy);if(dd<125*devicePixelRatio){ctx.globalAlpha=(1-dd/(125*devicePixelRatio))*0.16;ctx.strokeStyle='#e8e6e0';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();}}}ctx.globalAlpha=0.4;ctx.fillStyle='#e8e6e0';pts.forEach(function(p){ctx.beginPath();ctx.arc(p.x,p.y,1.3*devicePixelRatio,0,7);ctx.fill();});ctx.globalAlpha=1;raf=requestAnimationFrame(draw);}
+    resize();addEventListener('resize',resize);if(reduce){draw();cancelAnimationFrame(raf);}else{draw();}
+  })();
+</script>
+</body></html>
