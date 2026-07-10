@@ -347,16 +347,11 @@
   .starfield{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0.9;}
   :root[data-theme="light"] .starfield{opacity:0;}
 
-  /* Engineering dot-grid (light theme only): a neutral, static, barely-there
-     blueprint texture that recedes fully behind content. No colour, so it never
-     competes with the résumé or the pastel cards. A soft vignette mask keeps it
-     off the very edges. */
-  .gridbg{position:fixed;inset:0;z-index:-1;pointer-events:none;display:none;
-    background-image:radial-gradient(circle,rgba(24,28,38,0.05) 1px,transparent 1.5px);
-    background-size:26px 26px;
-    -webkit-mask-image:radial-gradient(130% 100% at 50% 0%,#000 60%,transparent 100%);
-    mask-image:radial-gradient(130% 100% at 50% 0%,#000 60%,transparent 100%);}
-  :root[data-theme="light"] .gridbg{display:block;}
+  /* Film grain (light theme only): a fine, monochrome, static noise texture that
+     recedes fully behind content. No pattern, no colour, so it never competes
+     with the résumé or the pastel cards; the tile image is set by Grain.tsx. */
+  .grainbg{position:fixed;inset:0;z-index:-1;pointer-events:none;display:none;background-repeat:repeat;opacity:0.7;}
+  :root[data-theme="light"] .grainbg{display:block;}
 
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}

@@ -9,13 +9,13 @@ import RevealInit from "@/components/RevealInit";
 import ScrollProgress from "@/components/ScrollProgress";
 import ScrollSpy from "@/components/ScrollSpy";
 import Starfield from "@/components/Starfield";
-import GridBg from "@/components/GridBg";
+import Grain from "@/components/Grain";
 
 export default function Home() {
   return (
     <>
       <Starfield />
-      <GridBg />
+      <Grain />
       <ScrollProgress />
       <Nav />
       <main>
