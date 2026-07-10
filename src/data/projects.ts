@@ -744,6 +744,41 @@ export const PROJECTS: Project[] = [
       ],
     },
   },
+  // ---- Coursework / practice (minor) -----------------------------------------
+  {
+    id: "woowa-precourse",
+    year: "2025",
+    duration: { en: "Nov 2025", ko: "2025.11" },
+    pas: "lavender",
+    stack: ["Java", "JUnit", "TDD", "Clean Code"],
+    links: { code: `${GH}/java-lotto-8` },
+    en: {
+      title: "Woowa Pre-course (Java)",
+      kicker: "Coursework",
+      role: "Solo",
+      type: "Java practice",
+      lede: "Woowa Tech Course 8th pre-course: small Java problems built test-first, with a focus on clean, refactorable code.",
+      desc: "A set of Java assignments (lotto, racing car, calculator, …) for the Woowahan Tech Course pre-course, practicing TDD, small commits, and readable structure.",
+      highlights: [
+        "Test-driven, small-commit workflow",
+        "Domain modeling + input validation",
+        "Refactoring toward readable, single-responsibility code",
+      ],
+    },
+    ko: {
+      title: "우아한테크코스 프리코스 (Java)",
+      kicker: "코스워크",
+      role: "개인",
+      type: "Java 연습",
+      lede: "우아한테크코스 8기 프리코스. 테스트를 먼저 작성하며 작은 Java 문제를 풀고 깔끔하고 리팩터링 가능한 코드에 집중했습니다.",
+      desc: "로또·자동차경주·계산기 등 Java 과제를 우아한테크코스 프리코스로 진행하며 TDD, 작은 커밋, 읽기 좋은 구조를 연습했습니다.",
+      highlights: [
+        "테스트 주도 · 작은 커밋 워크플로",
+        "도메인 모델링 + 입력 검증",
+        "단일 책임 · 가독성 중심 리팩터링",
+      ],
+    },
+  },
 ];
 
 export const byId: Record<string, Project> = Object.fromEntries(
@@ -768,6 +803,7 @@ export const ROWS: Row[] = [
   },
   { en: "AI & ML", ko: "인공지능", ids: ["hankook-chatbot", "multi-model-harness", "minigpt", "mnist", "codex-dashboard"] },
   { en: "Frontend", ko: "프론트엔드", ids: ["react-tetris", "vdom-diff"] },
+  { en: "Coursework & Practice", ko: "코스워크 · 연습", ids: ["woowa-precourse"] },
 ];
 
 export interface Milestone {
