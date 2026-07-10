@@ -745,6 +745,73 @@ export const PROJECTS: Project[] = [
       ],
     },
   },
+  {
+    id: "likelion-ml",
+    year: "2021",
+    duration: { en: "2021–22", ko: "2021~22" },
+    pas: "peach",
+    stack: ["Python", "Jupyter", "ML", "pandas"],
+    links: { code: `${GH}/LikeLion_13th_ML_Course` },
+    en: {
+      title: "LikeLion ML Study",
+      kicker: "Self-study",
+      role: "Solo",
+      type: "ML coursework",
+      lede: "Machine-learning coursework and a project write-up from LikeLion's 13th cohort, plus extra self-study.",
+      desc: "Notebooks and a presentation from the LikeLion (멋쟁이사자처럼) ML track: data handling, model basics, and a wrap-up project.",
+      highlights: [
+        "Data wrangling + model basics in Python / Jupyter",
+        "Cohort project write-up and presentation",
+        "Extra self-study beyond the curriculum",
+      ],
+    },
+    ko: {
+      title: "멋사 ML 스터디",
+      kicker: "자기주도 학습",
+      role: "개인",
+      type: "ML 코스워크",
+      lede: "멋쟁이사자처럼 13기 머신러닝 코스워크와 프로젝트 정리·발표, 그리고 추가 자기주도 학습.",
+      desc: "멋쟁이사자처럼 ML 과정의 노트북과 발표 자료입니다. 데이터 처리, 모델 기초, 마무리 프로젝트를 진행했습니다.",
+      highlights: [
+        "Python / Jupyter로 데이터 처리 + 모델 기초",
+        "기수 프로젝트 정리 및 발표",
+        "커리큘럼 외 추가 자기주도 학습",
+      ],
+    },
+  },
+  {
+    id: "php-cms",
+    year: "2020",
+    pas: "mint",
+    stack: ["PHP", "MySQL", "OOP"],
+    links: { code: `${GH}/php_Practice` },
+    en: {
+      title: "PHP CMS (self-study)",
+      kicker: "Self-study",
+      role: "Solo",
+      type: "CMS (unfinished)",
+      lede: "An early CMS built while learning object-oriented PHP and MySQL. Unfinished, but where a lot of the server-side fundamentals first clicked.",
+      desc: "A hands-on CMS following an object-oriented PHP + MySQL course. I didn't complete it, but it was an honest early step into server-side and database work. (Repo is private for now.)",
+      highlights: [
+        "Object-oriented PHP + MySQL from a course",
+        "Server-side rendering + basic CRUD",
+        "Early fundamentals, kept honestly (unfinished)",
+      ],
+    },
+    ko: {
+      title: "PHP CMS (자기주도 학습)",
+      kicker: "자기주도 학습",
+      role: "개인",
+      type: "CMS (미완성)",
+      lede: "객체지향 PHP·MySQL을 배우며 만든 초기 CMS. 완주하진 못했지만 서버사이드 기초가 처음 잡힌 작업입니다.",
+      desc: "객체지향 PHP + MySQL 강의를 따라 직접 만든 CMS입니다. 완성하진 못했지만 서버사이드와 데이터베이스에 처음 발을 들인 정직한 시도였습니다. (레포는 현재 비공개.)",
+      highlights: [
+        "강의로 익힌 객체지향 PHP + MySQL",
+        "서버사이드 렌더링 + 기본 CRUD",
+        "초기 기초, 미완성이지만 그대로 기록",
+      ],
+    },
+  },
 ];
 
 export const byId: Record<string, Project> = Object.fromEntries(
@@ -773,7 +840,11 @@ export const ROWS: Row[] = [
   },
   { en: "AI & ML", ko: "인공지능", ids: ["multi-model-harness", "minigpt", "mnist", "codex-dashboard"] },
   { en: "Frontend", ko: "프론트엔드", ids: ["react-tetris", "vdom-diff"] },
-  { en: "Coursework & Practice", ko: "코스워크 · 연습", ids: ["woowa-precourse"] },
+  {
+    en: "Coursework & Self-study",
+    ko: "코스워크 · 자기주도 학습",
+    ids: ["woowa-precourse", "likelion-ml", "php-cms"],
+  },
 ];
 
 export interface Milestone {
