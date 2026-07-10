@@ -347,17 +347,16 @@
   .starfield{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0.9;}
   :root[data-theme="light"] .starfield{opacity:0;}
 
-  /* Daylight aurora (light theme only): large, pale, slowly drifting colour
-     washes. Clean continuous fields rather than discrete specks. */
-  .aurora{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;display:none;}
-  :root[data-theme="light"] .aurora{display:block;}
-  .aurora i{position:absolute;display:block;width:56vw;height:56vw;max-width:840px;max-height:840px;border-radius:50%;filter:blur(12px);will-change:transform;}
-  .aurora i:nth-child(1){top:-14vw;left:-6vw;background:radial-gradient(circle at 50% 50%,rgba(34,211,238,0.16),transparent 64%);animation:aur1 36s ease-in-out infinite;}
-  .aurora i:nth-child(2){top:14vw;right:-12vw;background:radial-gradient(circle at 50% 50%,rgba(192,132,252,0.14),transparent 64%);animation:aur2 46s ease-in-out infinite;}
-  .aurora i:nth-child(3){bottom:-16vw;left:26vw;background:radial-gradient(circle at 50% 50%,rgba(244,114,182,0.10),transparent 64%);animation:aur3 54s ease-in-out infinite;}
-  @keyframes aur1{0%,100%{transform:translate(0,0)}50%{transform:translate(6vw,4vw)}}
-  @keyframes aur2{0%,100%{transform:translate(0,0)}50%{transform:translate(-5vw,6vw)}}
-  @keyframes aur3{0%,100%{transform:translate(0,0)}50%{transform:translate(4vw,-5vw)}}
+  /* Engineering dot-grid (light theme only): a neutral, static, barely-there
+     blueprint texture that recedes fully behind content. No colour, so it never
+     competes with the résumé or the pastel cards. A soft vignette mask keeps it
+     off the very edges. */
+  .gridbg{position:fixed;inset:0;z-index:-1;pointer-events:none;display:none;
+    background-image:radial-gradient(circle,rgba(24,28,38,0.05) 1px,transparent 1.5px);
+    background-size:26px 26px;
+    -webkit-mask-image:radial-gradient(130% 100% at 50% 0%,#000 60%,transparent 100%);
+    mask-image:radial-gradient(130% 100% at 50% 0%,#000 60%,transparent 100%);}
+  :root[data-theme="light"] .gridbg{display:block;}
 
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
@@ -365,5 +364,4 @@
     .tile,.btn,.modal-panel,.modal-backdrop{transition:none !important;}
     .track,.tl-scroll{scroll-behavior:auto;}
     .deck-slide{animation:none;}
-    .aurora i{animation:none;}
   }
