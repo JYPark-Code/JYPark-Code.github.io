@@ -82,7 +82,7 @@ export default function BottomBento() {
             LinkedIn
           </a>
           <a href={`mailto:${CONTACT.email}`} className="cbtn solid">
-            <T en="Email me →" ko="이메일 보내기 →" />
+            Email me →
           </a>
         </div>
       </div>
