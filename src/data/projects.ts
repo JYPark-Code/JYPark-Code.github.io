@@ -812,6 +812,72 @@ export const PROJECTS: Project[] = [
       ],
     },
   },
+  {
+    id: "static-profile",
+    year: "2021",
+    pas: "sky",
+    stack: ["HTML", "CSS"],
+    links: { code: `${GH}/static_profile_page_AppBrewery` },
+    en: {
+      title: "Static Profile Page",
+      kicker: "Self-study",
+      role: "Student",
+      type: "HTML / CSS",
+      lede: "An early hand-coded profile page from the Web Development Bootcamp: first steps in HTML and CSS.",
+      desc: "A static profile page built during the App Brewery Web Development Bootcamp (Udemy), practicing semantic HTML and CSS layout.",
+      highlights: [
+        "Semantic HTML structure",
+        "CSS layout and styling from scratch",
+        "First hands-on front-end steps",
+      ],
+    },
+    ko: {
+      title: "정적 프로필 페이지",
+      kicker: "자기주도 학습",
+      role: "수강생",
+      type: "HTML / CSS",
+      lede: "웹 개발 부트캠프에서 손으로 만든 초기 프로필 페이지. HTML·CSS의 첫걸음입니다.",
+      desc: "App Brewery 웹 개발 부트캠프(Udemy)에서 만든 정적 프로필 페이지로, 시맨틱 HTML과 CSS 레이아웃을 연습했습니다.",
+      highlights: [
+        "시맨틱 HTML 구조",
+        "CSS 레이아웃·스타일링을 밑바닥부터",
+        "프론트엔드 첫 실습",
+      ],
+    },
+  },
+  {
+    id: "react-study",
+    year: "2021",
+    pas: "lavender",
+    stack: ["React", "JavaScript"],
+    links: { code: `${GH}/Dynamic_Conditional_Rendering` },
+    en: {
+      title: "React Practice",
+      kicker: "Self-study",
+      role: "Student",
+      type: "React basics",
+      lede: "A handful of small React practice repos from learning the basics: components, state, conditional rendering, and styling.",
+      desc: "Tiny practice projects made while learning React: conditional rendering, styled-components, and props/state exercises.",
+      highlights: [
+        "Components, props, and state",
+        "Dynamic and conditional rendering",
+        "styled-components / CSS-in-JS",
+      ],
+    },
+    ko: {
+      title: "React 연습",
+      kicker: "자기주도 학습",
+      role: "수강생",
+      type: "React 기초",
+      lede: "React 기초를 배우며 만든 짤막한 연습 레포 모음. 컴포넌트, 상태, 조건부 렌더링, 스타일링.",
+      desc: "React를 배우며 만든 작은 연습 프로젝트들: 조건부 렌더링, styled-components, props/state 연습.",
+      highlights: [
+        "컴포넌트, props, 상태",
+        "동적·조건부 렌더링",
+        "styled-components / CSS-in-JS",
+      ],
+    },
+  },
 ];
 
 export const byId: Record<string, Project> = Object.fromEntries(
@@ -843,7 +909,7 @@ export const ROWS: Row[] = [
   {
     en: "Coursework & Self-study",
     ko: "코스워크 · 자기주도 학습",
-    ids: ["woowa-precourse", "likelion-ml", "php-cms"],
+    ids: ["woowa-precourse", "likelion-ml", "php-cms", "static-profile", "react-study"],
   },
 ];
 
