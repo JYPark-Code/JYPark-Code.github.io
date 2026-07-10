@@ -15,7 +15,8 @@ export interface CertGroup {
   items: CertItem[];
 }
 
-export const CERT_GROUPS: CertGroup[] = [
+// Essentials — always shown.
+export const CERTS_MAIN: CertGroup[] = [
   {
     label: "Certifications",
     items: [
@@ -31,6 +32,10 @@ export const CERT_GROUPS: CertGroup[] = [
       { name: "멋쟁이사자처럼 AI 스쿨 4기", year: "2021" },
     ],
   },
+];
+
+// Online-course certificates — folded behind a toggle so the section stays light.
+export const CERTS_COURSES: CertGroup[] = [
   {
     label: "Spring / JPA · Inflearn (김영한)",
     items: [
@@ -72,7 +77,8 @@ export const CERT_GROUPS: CertGroup[] = [
 // tucked into the section as a small easter egg.
 export const INFLEARN_BADGE = {
   src: "/inflearn-master.png",
-  title: "Inflearn 2025 · Master",
-  sub: "76h 53m studied",
+  recap: "Inflearn 2025 recap",
+  grade: "Master",
+  hours: "76h 53m",
   url: "https://www.inflearn.com",
 };
