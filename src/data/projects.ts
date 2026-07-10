@@ -289,6 +289,28 @@ export const PROJECTS: Project[] = [
   // ---- Backend / systems -----------------------------------------------------
   {
     id: "anycommerce",
+    narrative: {
+      problem: {
+        en: "I could write CRUD, but I'd never built a commerce backend end to end: real signup, auth, and orders with all the messy edges. I took on F-Lab mentoring to build one properly and have it torn apart in review.",
+        ko: "CRUD는 짤 수 있었지만, 회원가입·인증·주문까지 지저분한 경계를 포함해 커머스 백엔드를 끝까지 만들어본 적은 없었습니다. F-Lab 멘토링으로 제대로 만들고 리뷰에서 뜯겨보기로 했습니다.",
+      },
+      decision: {
+        en: "I modeled the domain honestly instead of flattening it: terms and agreements as composite-key entities, orders split into order / item / payment / delivery / status. The tradeoff is more tables and mapping code, but the invariants live in the schema instead of scattered service checks.",
+        ko: "도메인을 뭉개지 않고 정직하게 모델링했습니다. 약관·동의는 복합키 엔티티로, 주문은 주문 / 항목 / 결제 / 배송 / 상태로 분리했습니다. 트레이드오프는 테이블과 매핑 코드가 늘지만, 불변식이 서비스 곳곳의 검사 대신 스키마에 담긴다는 점입니다.",
+      },
+      implementation: {
+        en: "Auth is JWT (access + refresh) behind a Spring Security filter, and signup guards the real edges: email dup-check, CoolSMS phone verification, and encrypted passwords. Every failure flows through one ErrorCode + global handler so responses stay consistent.",
+        ko: "인증은 Spring Security 필터 뒤의 JWT(액세스 + 리프레시)이고, 회원가입은 실제 경계를 막습니다: 이메일 중복 체크, CoolSMS 휴대폰 인증, 비밀번호 암호화. 모든 실패는 하나의 ErrorCode + 글로벌 핸들러를 거쳐 응답이 일관되게 유지됩니다.",
+      },
+      result: {
+        en: "A running Spring Boot API from signup to auth, catalog, cart, and order, with integration tests and a CI/CD pipeline (GitHub Actions + SonarCloud) that built and pushed to AWS ECR. The bigger gain: months of mentor review reshaped how I structure a service.",
+        ko: "회원가입부터 인증·카탈로그·장바구니·주문까지 아우르는 동작하는 Spring Boot API. 통합 테스트와 CI/CD(GitHub Actions + SonarCloud)로 빌드해 AWS ECR에 푸시했습니다. 더 큰 소득은, 몇 달간의 멘토 리뷰가 서비스를 구조화하는 방식을 다시 잡아준 것입니다.",
+      },
+      connection: {
+        en: "The backend fundamentals under my company work: honest domain modeling, real auth, and a real pipeline. Exactly the engineering I want to keep deepening.",
+        ko: "제 실무 뒤에 있는 백엔드 기본기입니다: 정직한 도메인 모델링, 실제 인증, 실제 파이프라인. 제가 계속 깊이 파고 싶은 엔지니어링입니다.",
+      },
+    },
     year: "2024",
     duration: { en: "2024.10–2025.02", ko: "2024.10~2025.02" },
     pas: "lavender",
