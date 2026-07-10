@@ -8,10 +8,12 @@ import Footer from "@/components/Footer";
 import RevealInit from "@/components/RevealInit";
 import ScrollProgress from "@/components/ScrollProgress";
 import ScrollSpy from "@/components/ScrollSpy";
+import Starfield from "@/components/Starfield";
 
 export default function Home() {
   return (
     <>
+      <Starfield />
       <ScrollProgress />
       <Nav />
       <main>

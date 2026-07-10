@@ -341,6 +341,11 @@
     :root.theme-anim,:root.theme-anim *{transition:none !important;}
   }
 
+  /* Ambient starlight headliner behind the page (dark theme only). Sits over the
+     body background but behind all content; the opaque hero masks it up top. */
+  .starfield{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0.9;transition:opacity .4s ease;}
+  :root[data-theme="light"] .starfield{opacity:0;}
+
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
     .reveal{opacity:1;transform:none;transition:none;}
