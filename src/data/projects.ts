@@ -755,7 +755,7 @@ export const PROJECTS: Project[] = [
     en: {
       title: "LikeLion ML Study",
       kicker: "Self-study",
-      role: "Solo",
+      role: "Student",
       type: "ML coursework",
       lede: "Machine-learning coursework and a project write-up from LikeLion's 13th cohort, plus extra self-study.",
       desc: "Notebooks and a presentation from the LikeLion (멋쟁이사자처럼) ML track: data handling, model basics, and a wrap-up project.",
@@ -768,7 +768,7 @@ export const PROJECTS: Project[] = [
     ko: {
       title: "멋사 ML 스터디",
       kicker: "자기주도 학습",
-      role: "개인",
+      role: "수강생",
       type: "ML 코스워크",
       lede: "멋쟁이사자처럼 13기 머신러닝 코스워크와 프로젝트 정리·발표, 그리고 추가 자기주도 학습.",
       desc: "멋쟁이사자처럼 ML 과정의 노트북과 발표 자료입니다. 데이터 처리, 모델 기초, 마무리 프로젝트를 진행했습니다.",
