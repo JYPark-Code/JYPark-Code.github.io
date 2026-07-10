@@ -961,12 +961,14 @@ export interface Row {
 
 // Category rows (a project can appear in more than one). The dashed "+ more"
 // ghost tile renders on the last row only.
-// Cards are ordered newest-first (most recent on the left) within each row.
+// Cards are newest-first (most recent on the left) within each row, EXCEPT:
+// Featured is curated (strongest first), and large flagship projects lead their
+// category row regardless of date.
 export const ROWS: Row[] = [
   {
     en: "Featured",
     ko: "대표작",
-    ids: ["hhosting-website", "hhosting-ai-devtoolkit", "hhosting-proxmox", "event-driven-commerce"],
+    ids: ["anycommerce", "hhosting-website", "event-driven-commerce", "hhosting-ai-devtoolkit", "hhosting-proxmox"],
   },
   {
     en: "Company work",
@@ -976,7 +978,7 @@ export const ROWS: Row[] = [
   {
     en: "Backend & Systems",
     ko: "백엔드 · 시스템",
-    ids: ["pintos", "minisql", "web-proxy", "malloc", "mini-redis", "anycommerce", "event-driven-commerce"],
+    ids: ["anycommerce", "event-driven-commerce", "pintos", "minisql", "web-proxy", "malloc", "mini-redis"],
   },
   { en: "AI & ML", ko: "인공지능", ids: ["multi-model-harness", "minigpt", "mnist", "codex-dashboard"] },
   { en: "Frontend", ko: "프론트엔드", ids: ["react-tetris", "vdom-diff"] },
