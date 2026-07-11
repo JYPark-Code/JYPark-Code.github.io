@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { T } from "./T";
+import { useDialog } from "./useDialog";
 
 /**
  * Footer colophon: the "built with Claude Code + AI Dev Toolkit" line is a
@@ -33,22 +34,12 @@ export default function Colophon() {
 }
 
 function ColophonModal({ onClose }: { onClose: () => void }) {
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = "";
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [onClose]);
+  const panelRef = useDialog<HTMLDivElement>(onClose);
 
   return (
     <div className="modal open" role="dialog" aria-modal="true" aria-labelledby="colophonTitle">
       <div className="modal-backdrop" onClick={onClose} />
-      <div className="modal-panel">
+      <div className="modal-panel" ref={panelRef} tabIndex={-1}>
         <button className="modal-close" onClick={onClose} aria-label="Close">
           ✕
         </button>

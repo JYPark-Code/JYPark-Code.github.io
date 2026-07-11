@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 import { T } from "./T";
+import { useDialog } from "./useDialog";
 import { ROWS, byId, PAS, poster, type Narrative, type Project, type Row } from "@/data/projects";
 
 // Slide order + bilingual labels for the narrative deck.
@@ -151,25 +152,14 @@ function RowView({
 
 function ProjectModal({ project: p, onClose }: { project: Project; onClose: () => void }) {
   const c = PAS[p.pas] ?? PAS.sky;
-
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = "";
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [onClose]);
+  const panelRef = useDialog<HTMLDivElement>(onClose);
 
   const hasLinks = Boolean(p.links.live || p.links.code);
 
   return (
     <div className="modal open" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <div className="modal-backdrop" onClick={onClose} />
-      <div className="modal-panel" style={{ ["--mink"]: c[2] } as CSSProperties}>
+      <div className="modal-panel" ref={panelRef} tabIndex={-1} style={{ ["--mink"]: c[2] } as CSSProperties}>
         <div className="modal-hero">
           <div className="poster" style={{ background: poster(p.pas) }} />
           <button className="modal-close" onClick={onClose} aria-label="Close">

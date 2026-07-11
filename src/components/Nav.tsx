@@ -19,7 +19,9 @@ export default function Nav() {
           <a href="#about" className="sec">
             about
           </a>
-          <a href="#contact">contact</a>
+          <a href="#contact" className="contact">
+            contact
+          </a>
           <VisitorCount variant="nav" />
           <PrefToggles />
         </nav>
