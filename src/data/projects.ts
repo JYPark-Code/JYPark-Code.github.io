@@ -981,33 +981,35 @@ export interface Row {
   ids: string[];
 }
 
-// Category rows (a project can appear in more than one). The dashed "+ more"
-// ghost tile renders on the last row only.
-// Cards are newest-first (most recent on the left) within each row, EXCEPT:
-// Featured is curated (strongest first), and large flagship projects lead their
-// category row regardless of date.
+// Home is curated, NOT a full index — the GitHub link is the exit to the
+// complete record. Every project still lives in PROJECTS above; ROWS only
+// decides what the front page leads with. Two rows, nine unique projects, no
+// duplicates (see docs/review/project-portfolio-diet.md, plan A):
+//   Featured           — recent real-world + backend flagships, strongest first
+//   Selected technical work — one card per distinct signal (systems, AI, FE)
+// Each card must carry a signal no other card does; older intro/tutorial and
+// unfinished projects are intentionally left off the home (still in PROJECTS).
+// The dashed "+ more" ghost tile renders on the last row only.
 export const ROWS: Row[] = [
   {
     en: "Featured",
     ko: "대표작",
-    ids: ["anycommerce", "hhosting-website", "event-driven-commerce", "hhosting-ai-devtoolkit", "hhosting-proxmox"],
+    // Recent product work leads (current, real impact), then the public backend
+    // depth, the AI-tooling differentiator, distributed-systems design, and infra.
+    ids: [
+      "hhosting-website",
+      "anycommerce",
+      "hhosting-ai-devtoolkit",
+      "event-driven-commerce",
+      "hhosting-proxmox",
+    ],
   },
   {
-    en: "Company work",
-    ko: "회사 프로젝트",
-    ids: ["hhosting-website", "hhosting-ai-devtoolkit", "hhosting-proxmox", "hankook-chatbot"],
-  },
-  {
-    en: "Backend & Systems",
-    ko: "백엔드 · 시스템",
-    ids: ["anycommerce", "event-driven-commerce", "pintos", "minisql", "web-proxy", "malloc", "mini-redis"],
-  },
-  { en: "AI & ML", ko: "인공지능", ids: ["multi-model-harness", "minigpt", "mnist", "codex-dashboard"] },
-  { en: "Frontend", ko: "프론트엔드", ids: ["react-tetris", "vdom-diff"] },
-  {
-    en: "Coursework & Self-study",
-    ko: "코스워크 · 자기주도 학습",
-    ids: ["woowa-precourse", "fastapi-study", "likelion-ml", "static-profile", "react-study", "php-cms"],
+    en: "Selected technical work",
+    ko: "기술 선별작",
+    // Breadth without overlap: framework-free AI orchestration, a from-scratch C
+    // DBMS, and an earlier company RAG build.
+    ids: ["multi-model-harness", "minisql", "hankook-chatbot"],
   },
 ];
 
