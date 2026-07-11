@@ -201,14 +201,14 @@ export const PROJECTS: Project[] = [
     },
     year: "2026 – present",
     pas: "mint",
-    stack: ["Node.js", "JavaScript", "CLI", "Playwright", "Obsidian", "MCP"],
+    stack: ["Node.js", "JavaScript", "CLI", "Claude Code", "Codex", "Playwright", "Obsidian", "MCP"],
     links: {},
     en: {
       title: "AI Dev Toolkit",
       kicker: "Company · Tooling",
       role: "Author (solo)",
       type: "CLI / harness",
-      lede: "A reusable harness that captures project knowledge and feeds it to AI coding agents in small, useful slices.",
+      lede: "A reusable harness that captures project knowledge and feeds it to AI coding agents (Claude Code, Codex) in small, useful slices.",
       desc: "Built solo to make AI-assisted development repeatable across projects. It registers a project, captures read-only knowledge packs without touching the source, runs profile-aware quality gates, and exposes an Obsidian-based retrieval memory so agents can query context instead of re-reading everything each session.",
       highlights: [
         "Profile-aware quality gates for web, mobile, Flutter, Python, and Spring projects",
@@ -221,7 +221,7 @@ export const PROJECTS: Project[] = [
       kicker: "회사 · 도구",
       role: "단독 제작",
       type: "CLI / 하네스",
-      lede: "프로젝트 지식을 캡처해 AI 코딩 에이전트에게 작고 유용한 단위로 전달하는 재사용 가능한 하네스.",
+      lede: "프로젝트 지식을 캡처해 AI 코딩 에이전트(Claude Code, Codex)에게 작고 유용한 단위로 전달하는 재사용 가능한 하네스.",
       desc: "AI 보조 개발을 프로젝트마다 반복 가능하게 만들기 위해 단독으로 제작했습니다. 프로젝트를 등록하고, 소스를 건드리지 않은 채 읽기 전용 지식 팩을 캡처하며, 프로파일별 품질 게이트를 실행하고, Obsidian 기반 검색 메모리로 에이전트가 매 세션 전체를 다시 읽는 대신 필요한 맥락만 질의하게 합니다.",
       highlights: [
         "웹·모바일·Flutter·Python·Spring 프로파일별 품질 게이트",

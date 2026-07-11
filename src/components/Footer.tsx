@@ -1,13 +1,12 @@
 import { T } from "./T";
 import { CONTACT } from "@/data/profile";
+import Colophon from "./Colophon";
 
 export default function Footer() {
   return (
     <footer>
       <div className="wrap foot-inner">
-        <span className="mono">
-          <T en="© 2026 Ji Yong Park · built with Next.js" ko="© 2026 박지용 · Next.js로 제작" />
-        </span>
+        <Colophon />
         <div className="foot-links">
           <a href={CONTACT.github} target="_blank" rel="noopener noreferrer">
             GitHub

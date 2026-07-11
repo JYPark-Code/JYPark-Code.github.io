@@ -15,6 +15,8 @@ const eslintConfig = defineConfig([
     // Installed Claude Code skills / tooling — not application source.
     ".claude/**",
     "mockups/**",
+    // Cloudflare Worker — runs in the Workers runtime, not the Next app.
+    "worker/**",
   ]),
 ]);
 

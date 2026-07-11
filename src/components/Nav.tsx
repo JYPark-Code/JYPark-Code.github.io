@@ -1,4 +1,5 @@
 import PrefToggles from "./PrefToggles";
+import VisitorCount from "./VisitorCount";
 
 // Nav tabs stay English in both languages (UI chrome), per the user's preference.
 export default function Nav() {
@@ -8,6 +9,7 @@ export default function Nav() {
         <a href="#top" className="brand">
           JYPark.dev
         </a>
+        <VisitorCount variant="nav" />
         <nav className="nav-links" aria-label="Sections">
           <a href="#browse" className="sec">
             work

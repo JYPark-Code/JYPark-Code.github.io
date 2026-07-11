@@ -29,6 +29,9 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          # Public URL of the visitor-counter Worker (see worker/README.md).
+          NEXT_PUBLIC_COUNTER_URL: https://portfolio-counter.jypark-dev.workers.dev
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out

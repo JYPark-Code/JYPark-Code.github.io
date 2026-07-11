@@ -1,0 +1,9 @@
+name = "portfolio-counter"
+main = "counter.js"
+compatibility_date = "2024-11-01"
+
+# Created with: wrangler kv namespace create COUNTER
+# Paste the printed id below, then `wrangler deploy`.
+[[kv_namespaces]]
+binding = "COUNTER"
+id = "05245cfe62f7453bb4ff16f7d48378ac"

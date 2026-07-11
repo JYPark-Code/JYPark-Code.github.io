@@ -38,7 +38,7 @@ export const STACK_COLUMNS: StackColumn[] = [
   { en: "Languages", ko: "언어", items: ["Java", "TypeScript", "Python", "C"] },
   { en: "Frameworks", ko: "프레임워크", items: ["Next.js / React", "Spring Boot", "Node.js", "FastAPI"] },
   { en: "Infra & Data", ko: "인프라·데이터", items: ["MySQL / Postgres", "Redis", "Kafka", "Docker"] },
-  { en: "Practices", ko: "개발 방식", items: ["Testing", "CI / CD", "Load testing", "Code review"] },
+  { en: "Practices", ko: "개발 방식", items: ["AI-assisted dev (Claude Code · Codex)", "Testing", "CI / CD", "Load testing", "Code review"] },
 ];
 
 export interface CurrentlyItem {
