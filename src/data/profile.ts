@@ -22,7 +22,7 @@ export interface HeroStat {
 // Qualitative + honest (no invented years of experience).
 export const HERO_STATS: HeroStat[] = [
   { value: "Full‑stack", en: "Scope", ko: "범위" },
-  { value: "Java", unit: "/TS", en: "Primary stack", ko: "주력 스택" },
+  { value: "Java", unit: "/Py/TS", en: "Primary stack", ko: "주력 스택" },
   { value: "Web", unit: "·Infra", en: "Focus", ko: "중점 분야" },
 ];
 
