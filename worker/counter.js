@@ -5,7 +5,8 @@
 //   GET  https://<worker>.workers.dev/?hit=1     → increment, then return tally
 //
 // The client (src/components/VisitorCount.tsx) only sends ?hit=1 on the first
-// load of the day per browser, so "today" ≈ unique daily visitors.
+// load of the day per browser; the Worker then dedups again per IP per day, so
+// "today" ≈ unique daily visitors and can't be re-counted by clearing storage.
 //
 // NOTE: KV read-modify-write is not atomic, so heavy concurrent traffic can
 // slightly undercount. That's fine for a portfolio. If you ever need exact
@@ -40,18 +41,30 @@ export default {
     const fromSite = request.headers.get("Origin") === ALLOW_ORIGIN;
 
     const url = new URL(request.url);
-    const hit = url.searchParams.get("hit") === "1" && fromSite;
-    const dayKey = `day:${seoulDay()}`;
+    const wantsHit = url.searchParams.get("hit") === "1" && fromSite;
+    const day = seoulDay();
+    const dayKey = `day:${day}`;
 
     let total = parseInt((await env.COUNTER.get("total")) || "0", 10);
     let today = parseInt((await env.COUNTER.get(dayKey)) || "0", 10);
 
-    if (hit) {
-      total += 1;
-      today += 1;
-      await env.COUNTER.put("total", String(total));
-      // Day buckets self-expire after 48h so old dates don't accumulate in KV.
-      await env.COUNTER.put(dayKey, String(today), { expirationTtl: 60 * 60 * 48 });
+    if (wantsHit) {
+      // Server-side rate limit: count each IP at most once per (KST) day. This is
+      // the real "unique visitor" guard — it can't be bypassed by clearing the
+      // browser's localStorage, and it caps how much any single source can inflate
+      // the tally even if it forges the Origin header.
+      const ip = request.headers.get("cf-connecting-ip") || "";
+      const ipKey = ip ? `ip:${day}:${ip}` : null;
+      const seenToday = ipKey ? await env.COUNTER.get(ipKey) : null;
+
+      if (!seenToday) {
+        total += 1;
+        today += 1;
+        await env.COUNTER.put("total", String(total));
+        // Day + per-IP buckets self-expire after 48h so KV doesn't accumulate.
+        await env.COUNTER.put(dayKey, String(today), { expirationTtl: 60 * 60 * 48 });
+        if (ipKey) await env.COUNTER.put(ipKey, "1", { expirationTtl: 60 * 60 * 48 });
+      }
     }
 
     return new Response(JSON.stringify({ today, total }), {
