@@ -11,8 +11,8 @@
 // slightly undercount. That's fine for a portfolio. If you ever need exact
 // counts, move the state into a Durable Object.
 
-// Restrict this to your site once deployed, e.g. "https://jypark-code.github.io".
-const ALLOW_ORIGIN = "*";
+// Locked to the portfolio origin so only this site can read/increment the counter.
+const ALLOW_ORIGIN = "https://jypark-code.github.io";
 
 // Cloudflare runs on UTC; Korea is UTC+9 with no DST. Bucket "today" by KST.
 function seoulDay() {
@@ -25,6 +25,7 @@ export default {
     const cors = {
       "Access-Control-Allow-Origin": ALLOW_ORIGIN,
       "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Vary": "Origin",
       "Cache-Control": "no-store",
     };
 
@@ -32,8 +33,14 @@ export default {
       return new Response(null, { headers: cors });
     }
 
+    // CORS only stops other sites from READING the response; it does not stop a
+    // non-browser client from triggering increments. So gate the increment on a
+    // matching Origin header. The real site's fetch (cross-origin to workers.dev)
+    // always sends Origin; other sites' browser JS can't forge it. Reads stay open.
+    const fromSite = request.headers.get("Origin") === ALLOW_ORIGIN;
+
     const url = new URL(request.url);
-    const hit = url.searchParams.get("hit") === "1";
+    const hit = url.searchParams.get("hit") === "1" && fromSite;
     const dayKey = `day:${seoulDay()}`;
 
     let total = parseInt((await env.COUNTER.get("total")) || "0", 10);
