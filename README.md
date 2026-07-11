@@ -46,11 +46,16 @@ Deployment is automated by [`.github/workflows/deploy.yml`](./.github/workflows/
 
 **One-time setup:** in **Settings → Pages → Source**, select **GitHub Actions** (the repo currently uses the legacy branch source). After that, pushes to `main` deploy automatically.
 
+### Visitor counter
+
+The nav shows a today / total visitor count. A static site has no backend, so the tally lives in a tiny **Cloudflare Worker + KV** under [`worker/`](./worker). Set `NEXT_PUBLIC_COUNTER_URL` to the deployed Worker URL to enable it; until then it renders nothing. Deploy and hardening steps are in [`worker/README.md`](./worker/README.md).
+
 ## Project layout
 
 ```
 src/
   app/          # App Router entry (layout, page, globals.css)
-  data/         # Content model: profile, projects, milestones (planned)
-  lib/          # i18n dictionary + helpers (planned)
+  components/   # UI sections (Hero, Browse, Journey, Footer, …) + client widgets
+  data/         # Content model: profile, projects, milestones
+worker/         # Cloudflare Worker + KV for the visitor counter
 ```
