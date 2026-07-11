@@ -9,7 +9,6 @@ export default function Nav() {
         <a href="#top" className="brand">
           JYPark.dev
         </a>
-        <VisitorCount variant="nav" />
         <nav className="nav-links" aria-label="Sections">
           <a href="#browse" className="sec">
             work
@@ -21,6 +20,7 @@ export default function Nav() {
             about
           </a>
           <a href="#contact">contact</a>
+          <VisitorCount variant="nav" />
           <PrefToggles />
         </nav>
       </div>

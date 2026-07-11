@@ -8,16 +8,21 @@ import { T } from "./T";
 // then this component renders nothing, so the site stays clean pre-deploy.
 const ENDPOINT = process.env.NEXT_PUBLIC_COUNTER_URL ?? "";
 
+type Counts = { today: number; total: number };
+
 /** Today's date in Asia/Seoul (YYYY-MM-DD) — used only for the once-a-day guard. */
 function seoulDay(): string {
   return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul" }).format(new Date());
 }
 
-export default function VisitorCount({ variant = "footer" }: { variant?: "footer" | "nav" }) {
-  const [c, setC] = useState<{ today: number; total: number } | null>(null);
+// Memoized across every VisitorCount instance (nav + footer share ONE request),
+// so the page increments at most once — not once per placement.
+let countsPromise: Promise<Counts | null> | null = null;
 
-  useEffect(() => {
-    if (!ENDPOINT) return;
+function loadCounts(): Promise<Counts | null> {
+  if (countsPromise) return countsPromise;
+  countsPromise = (async () => {
+    if (!ENDPOINT) return null;
 
     const flag = `visited:${seoulDay()}`;
     let firstToday = false;
@@ -27,24 +32,39 @@ export default function VisitorCount({ variant = "footer" }: { variant?: "footer
       /* localStorage blocked (private mode) — just read, never dedup */
     }
 
-    // Only the first load of the day increments; later loads read the tally.
-    fetch(firstToday ? `${ENDPOINT}?hit=1` : ENDPOINT)
-      .then((r) => r.json())
-      .then((d) => {
-        if (firstToday) {
-          try {
-            localStorage.setItem(flag, "1");
-          } catch {
-            /* ignore */
-          }
+    try {
+      // Only the first load of the day increments; later loads read the tally.
+      const res = await fetch(firstToday ? `${ENDPOINT}?hit=1` : ENDPOINT);
+      const d = await res.json();
+      if (firstToday) {
+        try {
+          localStorage.setItem(flag, "1");
+        } catch {
+          /* ignore */
         }
-        if (typeof d?.total === "number") {
-          setC({ today: Number(d.today) || 0, total: d.total });
-        }
-      })
-      .catch(() => {
-        /* offline or Worker down — show nothing */
-      });
+      }
+      if (typeof d?.total === "number") {
+        return { today: Number(d.today) || 0, total: d.total };
+      }
+      return null;
+    } catch {
+      return null; // offline or Worker down — show nothing
+    }
+  })();
+  return countsPromise;
+}
+
+export default function VisitorCount({ variant = "footer" }: { variant?: "footer" | "nav" }) {
+  const [c, setC] = useState<Counts | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    loadCounts().then((v) => {
+      if (alive && v) setC(v);
+    });
+    return () => {
+      alive = false;
+    };
   }, []);
 
   if (!c) return null;
