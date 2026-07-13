@@ -32,6 +32,9 @@
     --ink-soft:rgba(20,21,24,0.06); --ink-line:rgba(20,21,24,0.28);
     --ok:#2e8b57;
   }
+  /* Wide screens: widen the centered column so hero/about don't feel
+     narrowly floated in a sea of gutter. No effect at <=1600px. */
+  @media (min-width:1600px){ :root{ --maxw:1480px; } }
 
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;scroll-padding-top:5rem;}
