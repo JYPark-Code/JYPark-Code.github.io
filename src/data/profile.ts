@@ -11,19 +11,59 @@ export const CONTACT = {
   linkedin: "https://www.linkedin.com/in/%EC%A7%80%EC%9A%A9-%EB%B0%95-4078ba195/?locale=en",
 } as const;
 
+/** A labelled bar under a hero stat. `level` (0–1) is a qualitative emphasis of
+ * relative strength/focus — not a measured metric. */
+export interface StatMeter {
+  en: string;
+  ko: string;
+  level: number;
+}
+
 export interface HeroStat {
   /** Big value. Numeric strings count up on load; text values render as-is. */
   value: string;
   unit?: string;
   en: string;
   ko: string;
+  /** Up to 3 mini meters shown below the label (desktop only). */
+  meters?: StatMeter[];
 }
 
-// Qualitative + honest (no invented years of experience).
+// Qualitative + honest (no invented years of experience). Meter levels read as
+// relative emphasis (backend-deepest, Java-primary), matching the hero copy.
 export const HERO_STATS: HeroStat[] = [
-  { value: "Full‑stack", en: "Scope", ko: "범위" },
-  { value: "Java", unit: "/Py/TS", en: "Primary stack", ko: "주력 스택" },
-  { value: "Web", unit: "·Infra", en: "Focus", ko: "중점 분야" },
+  {
+    value: "Full‑stack",
+    en: "Scope",
+    ko: "범위",
+    meters: [
+      { en: "Backend", ko: "백엔드", level: 0.95 },
+      { en: "Infra & Data", ko: "인프라·데이터", level: 0.78 },
+      { en: "Frontend", ko: "프론트엔드", level: 0.66 },
+    ],
+  },
+  {
+    value: "Java",
+    unit: "/Py/TS",
+    en: "Primary stack",
+    ko: "주력 스택",
+    meters: [
+      { en: "Java", ko: "Java", level: 0.92 },
+      { en: "Python", ko: "Python", level: 0.8 },
+      { en: "TypeScript", ko: "TypeScript", level: 0.72 },
+    ],
+  },
+  {
+    value: "Web",
+    unit: "·Infra",
+    en: "Focus",
+    ko: "중점 분야",
+    meters: [
+      { en: "Reliability", ko: "안정성", level: 0.9 },
+      { en: "Data & DB", ko: "데이터·DB", level: 0.8 },
+      { en: "Performance", ko: "성능", level: 0.68 },
+    ],
+  },
 ];
 
 export interface StackColumn {

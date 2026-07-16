@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { T } from "./T";
 import Constellation from "./Constellation";
 import { HERO_STATS, CONTACT } from "@/data/profile";
@@ -66,6 +67,20 @@ export default function Hero() {
           <div className="l">
             <T en={s.en} ko={s.ko} />
           </div>
+          {s.meters ? (
+            <div className="meters" aria-hidden="true">
+              {s.meters.map((m, j) => (
+                <div className="meter" key={j} style={{ "--lvl": m.level } as CSSProperties}>
+                  <span className="ml">
+                    <T en={m.en} ko={m.ko} />
+                  </span>
+                  <span className="mbar">
+                    <i />
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : null}
         </div>
       ))}
     </section>

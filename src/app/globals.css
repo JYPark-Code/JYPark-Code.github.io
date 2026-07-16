@@ -125,7 +125,7 @@
   @media(max-width:900px){.nav-visits{display:none;}}
 
   /* ===== TOP BENTO ===== */
-  .hero-bento{display:grid;grid-template-columns:2fr 1fr;grid-auto-rows:1fr;gap:0.9rem;padding-top:clamp(1.5rem,3vw,2.4rem);padding-bottom:1rem;}
+  .hero-bento{display:grid;grid-template-columns:2fr 1fr;grid-auto-rows:1fr;gap:0.9rem;padding-top:clamp(1.5rem,3vw,2.4rem);padding-bottom:1rem;position:relative;}
   .cell{border:1px solid var(--line);border-radius:18px;background:var(--bg-elev);position:relative;overflow:hidden;}
   .hero-main{grid-row:span 3;min-height:min(70vh,560px);display:flex;align-items:center;padding:clamp(1.6rem,4vw,3rem);background:#08090c;}
   /* animated aurora — flashy color behind readable text */
@@ -165,6 +165,37 @@
   .stat .k .u{color:var(--muted);font-size:0.55em;margin-left:0.1rem;}
   .stat .l{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-top:0.5rem;}
   .stat .edit{font-family:var(--mono);font-size:0.64rem;color:var(--faint);margin-top:0.35rem;}
+  /* Mini meters: qualitative emphasis bars under each hero stat (desktop only). */
+  .stat .meters{margin-top:1.25rem;display:flex;flex-direction:column;gap:0.6rem;}
+  .stat .meter{display:grid;grid-template-columns:5.4em 1fr;align-items:center;gap:0.75rem;}
+  .stat .meter .ml{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.02em;color:var(--muted);white-space:nowrap;}
+  .stat .meter .mbar{height:4px;border-radius:999px;background:rgba(255,255,255,0.09);overflow:hidden;}
+  .stat .meter .mbar i{display:block;height:100%;width:calc(var(--lvl)*100%);background:var(--grad);border-radius:inherit;transform-origin:left;animation:meterGrow 0.9s var(--ease) both;}
+  @keyframes meterGrow{from{transform:scaleX(0);}to{transform:scaleX(1);}}
+  :root[data-theme="light"] .stat .meter .mbar{background:rgba(16,24,40,0.1);}
+  @media(max-width:820px){.stat .meters{display:none;}}
+  @media (prefers-reduced-motion: reduce){.stat .meter .mbar i{animation:none;}}
+  /* Dark + wide only: turn the stat cards and the About/Currently/Stack cards to
+     glass so the starfield + nebula read through them (light theme + mobile keep
+     the solid card; Contact keeps its own gradient panel). */
+  @media(min-width:821px){
+    :root:not([data-theme="light"]) .stat,
+    :root:not([data-theme="light"]) .bcell:not(.contact){
+      background:color-mix(in srgb,var(--bg-elev) 58%,transparent);
+      backdrop-filter:blur(13px) saturate(1.1);
+      -webkit-backdrop-filter:blur(13px) saturate(1.1);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    /* Soft nebula behind the stat column, revealed through the glass cards. */
+    :root:not([data-theme="light"]) .hero-bento::before{
+      content:"";position:absolute;z-index:0;top:4%;bottom:4%;right:0;width:34%;
+      background:
+        radial-gradient(66% 52% at 82% 20%, rgba(99,102,241,0.28), transparent 62%),
+        radial-gradient(58% 55% at 96% 66%, rgba(244,114,182,0.17), transparent 64%),
+        radial-gradient(58% 60% at 58% 96%, rgba(34,211,238,0.15), transparent 62%);
+      filter:blur(24px);border-radius:24px;pointer-events:none;
+    }
+  }
   @media(max-width:820px){.hero-bento{grid-template-columns:1fr 1fr;}.hero-main{grid-column:1/3;grid-row:auto;min-height:auto;}}
   /* Mobile hero: full-width hero on its own row, then a compact 3-across strip
      of stats. Reset grid-auto-rows so the stat cards no longer stretch to the
