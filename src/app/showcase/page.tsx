@@ -70,10 +70,9 @@ export default function ShowcasePage() {
       <footer className={styles.foot}>
         <div className={styles.footLeft}>
           <span className="mono">Prototype · scroll-choreography direction</span>
-          <VisitorCount />
         </div>
         <Link href="/" className={styles.backLink}>
-          ← <T en="back to the live site" ko="라이브 사이트로 돌아가기" />
+          ← <T en="Previous version" ko="이전 버전 사이트" />
         </Link>
       </footer>
     </main>
@@ -961,7 +960,7 @@ function ContactScene({ reduce }: { reduce: boolean }) {
             LinkedIn ↗
           </a>
           <a href={`mailto:${CONTACT.email}`} className={`${styles.cbtn} ${styles.cbtnSolid}`}>
-            <T en="Email me →" ko="이메일 보내기 →" />
+            <T en="Email me →" ko="Email me →" />
           </a>
         </div>
       </Reveal>

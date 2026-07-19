@@ -6,7 +6,7 @@ Built as a single scrolling page (bento hero → Netflix-style project browse �
 
 ## Design evolution
 
-The site runs two design directions off one shared content model (`src/data/`), so copy and projects stay in sync between them. **v6 is live at [`/showcase`](https://jypark-code.github.io/showcase/)** alongside the untouched v5 at `/`, so the two can be compared side by side.
+The site runs two design directions off one shared content model (`src/data/`), so copy and projects stay in sync between them. **v6 is live at [`/showcase`](https://jypark-code.github.io/showcase/)** alongside the untouched v5 at `/`. v6 was originally intended to replace v5 at the root; for now both ship so the direction can be evaluated on the real site before deciding whether to promote it.
 
 | | **v5 — live** (`/`) | **v6 — prototype** (`/showcase`) |
 | --- | --- | --- |
