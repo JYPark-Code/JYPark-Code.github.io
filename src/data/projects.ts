@@ -71,6 +71,12 @@ export interface Project {
   year: string;
   /** Optional build duration — used to show short, high-impact sprints. */
   duration?: { en: string; ko: string };
+  /** Lifecycle marker surfaced on the card:
+   *  - "ongoing"  = in progress / not yet publicly deployed (e.g. a renewal whose
+   *    live site is still the old one), so it isn't mistaken for a finished launch.
+   *  - "evolving" = shipped and actively growing as work/data accumulates
+   *    (a living tool that keeps getting better), not a one-off delivery. */
+  status?: "ongoing" | "evolving";
   pas: PastelKey;
   stack: string[];
   /** Omit or leave empty for private repos, the modal simply shows no links. */
@@ -111,6 +117,7 @@ export const PROJECTS: Project[] = [
     },
     year: "2026 – present",
     duration: { en: "3 weeks", ko: "3주" },
+    status: "ongoing",
     pas: "butter",
     stack: ["Next.js 16", "React 19", "TypeScript", "Tailwind v4", "MySQL", "Drizzle ORM", "Better Auth (RBAC)"],
     links: {},
@@ -200,6 +207,7 @@ export const PROJECTS: Project[] = [
       },
     },
     year: "2026 – present",
+    status: "evolving",
     pas: "mint",
     stack: ["Node.js", "JavaScript", "CLI", "Claude Code", "Codex", "Playwright", "Obsidian", "MCP"],
     links: {},

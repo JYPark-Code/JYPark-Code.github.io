@@ -54,7 +54,15 @@ function loadCounts(): Promise<Counts | null> {
   return countsPromise;
 }
 
-export default function VisitorCount({ variant = "footer" }: { variant?: "footer" | "nav" }) {
+export default function VisitorCount({
+  variant = "footer",
+  demo = false,
+}: {
+  variant?: "footer" | "nav";
+  /** Prototype-only: show placeholder counts when no live endpoint is wired, so
+   * the counter's placement/look can be previewed. Real counts override it. */
+  demo?: boolean;
+}) {
   const [c, setC] = useState<Counts | null>(null);
 
   useEffect(() => {
@@ -67,20 +75,21 @@ export default function VisitorCount({ variant = "footer" }: { variant?: "footer
     };
   }, []);
 
-  if (!c) return null;
+  const shown = c ?? (demo ? { today: 42, total: 3128 } : null);
+  if (!shown) return null;
 
   const cls = variant === "nav" ? "nav-visits" : "foot-visits mono";
 
   return (
-    <span className={cls} aria-label="Visitor counter" title="Visitors — today · total">
+    <span className={cls} aria-label="Visitor counter" title="Visitors: today · total">
       <span>
-        <T en="Today" ko="오늘" /> <b>{c.today.toLocaleString()}</b>
+        <T en="Today" ko="오늘" /> <b>{shown.today.toLocaleString()}</b>
       </span>
       <span className="dot" aria-hidden="true">
         ·
       </span>
       <span>
-        <T en="Total" ko="누적" /> <b>{c.total.toLocaleString()}</b>
+        <T en="Total" ko="누적" /> <b>{shown.total.toLocaleString()}</b>
       </span>
     </span>
   );
